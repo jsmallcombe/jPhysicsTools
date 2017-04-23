@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/modules/node/node.css.jsf?ln=style/includes" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/modules/system/defaults.css.jsf?ln=style/includes" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/sites/all/modules/cck/theme/content-module.css.jsf?ln=style/includes" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/sites/all/modules/nice_menus/nice_menus.css.jsf?ln=style/includes" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/sites/all/modules/nice_menus/nice_menus_default.css.jsf?ln=style/includes" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/css/style.css.jsf?ln=style/includes" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/jquery-ui-1.8.6.custom.css.jsf?ln=style/jquery-roller/css/custom-theme" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/yield.css.jsf?ln=style" /><link type="text/css" rel="stylesheet" href="/science/javax.faces.resource/primefaces.css.jsf?ln=primefaces" /><script type="text/javascript" src="/science/javax.faces.resource/jquery/jquery.js.jsf?ln=primefaces"></script><script type="text/javascript" src="/science/javax.faces.resource/primefaces.js.jsf?ln=primefaces"></script>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <title>Titanium Target  Yields | ISAC Yield Database | TRIUMF : Canada's National Laboratory for Particle and Nuclear Physics
+        </title><script type="text/javascript" src="/science/javax.faces.resource/jsf.js.jsf?ln=javax.faces"></script>
+            <style type="text/css">
+                #yieldMenuItem {
+                    background-color:#FFFFFF;
+                    border:1px solid #660000;
+                }
+                #yieldMenuItem *{
+                    color:#660000 !important;
+                }
+            </style>
+            <script type="text/javascript">
+                //<![CDATA[
+                //                The following is by Lincoln Baxter (Sept. 10, 2009) via http://ocpsoft.com/java/jsf-java/jsf2-how-to-create-a-global-ajax-status-indicator/
+                //                Slightly modified by me. -N.S.
+                /**
+                 * ***************************************
+                 * Busy Status
+                 */
+                if (!window["busystatus"]) {
+                    var busystatus = {};
+                }
+
+                busystatus.onStatusChange = function onStatusChange(data) {
+                    var status = data.status;
+
+                    if (status === "begin") { // turn on busy indicator
+                        document.body.style.cursor = 'wait';
+                    } else { // turn off busy indicator, on either "complete" or "success"
+                        document.body.style.cursor = 'auto';
+                    }
+                };
+
+                jsf.ajax.addOnEvent(busystatus.onStatusChange);
+                //]]>
+            </script></head><body class="front not-logged-in page-taxonomy sidebar-left ice-skin-sam">
+            
+            <div id="header">
+                <h1>
+                    <a href="http://www.triumf.ca/"><img src="/science/includes/sites/all/themes/triumf_beta3/images/logo-triumf.gif" alt="Home" class="logo" /></a>
+                    <div id="mission">
+                            Canada's national laboratory for particle and nuclear physics<br />
+                            Laboratoire national canadien pour la recherche en physique nucléaire et en physique des particules
+                        
+                    </div>
+                </h1>
+
+
+                <div class="navigation">
+                    <div class="navigation-body">
+
+                        
+                        <div class="navigation-primary">
+                            <ul class="links">
+                                <li class="menu-240"><a href="http://www.triumf.ca">TRIUMF Home</a></li> 
+                <li class="menu-263"><a href="/science/schedules.jsf" title="Beam Schedules">Beam Schedules</a> 
+                </li> 
+                <li class="menu-263"><a href="/science/experiment/list.jsf" title="Experiments">Experiments</a> 
+                </li> 
+                <li class="menu-263"><a href="/science/beam/request/home.jsf" title="Beam Requests">Beam Requests</a> 
+                </li> 
+                <li class="menu-263"><a href="/science/dashboard.jsf" title="Experimenters' Dashboard">Dashboard</a> 
+                </li> 
+                <li class="menu-263"><a href="/science/planning/yield/beam" class="active" title="Experiment Planning">planning</a> 
+                </li>
+                            </ul>
+                        </div>
+                        
+
+                        
+                        <div id="nav-right">
+                            <ul>
+                                <li class="last"><a href="/science/login.jsf" style="text-transform:none" class="">Login to Science Applications</a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            
+
+
+
+
+            
+            <div id="container" class="clear-block">
+
+
+                
+                <div id="left-sidebar" class="sidebar">
+
+                    
+                    <div id="block-nice_menus-1" class="block block-nice_menus">
+
+                        <div class="content">
+            <ul class="nice-menu nice-menu-left">
+                <li><a href="http://www.triumf.ca/research-program/planning-experiments">
+                        Planning Guide
+                    </a>
+                </li>
+                <li id="yieldMenuItem"><a href="/science/planning/yield/beam">ISAC Yield Database</a>
+                </li>
+                <li><a href="http://olis.triumf.ca/">
+                        OLIS Beam data
+                    </a>
+                </li>
+                <li id="yieldUpdateMenuItem"><a href="/science/planning/yield/update">Administration</a>
+                </li>
+            </ul>
+                        </div>
+                    </div>
+                    <div style="height:20px;"><div id="j_idt71"><div id="j_idt71_start" style="display:none"><img src="/science/javax.faces.resource/ajax-loader.gif.jsf?ln=images" style="margin-right:5px;" /><span style="color:#666;font-weight:bold;">Loading...</span></div><div id="j_idt71_complete" style="display:none"></div></div><script id="j_idt71_s" type="text/javascript">PrimeFaces.cw('AjaxStatus','widget_j_idt71',{id:'j_idt71'});widget_j_idt71.bindFacet('ajaxStart', 'start');widget_j_idt71.bindFacet('ajaxComplete', 'complete');</script>
+                    </div>
+                    
+
+                </div>
+
+                
+
+                
+                <div id="page">
+
+                    <div id="content_middle" class="content_middle">
+                        <div id="block-block-6" class="block block-block">
+                            <div class="content">
+            <h2 class="title"> Yields for Titanium Targets</h2>
+<form id="j_idt83" name="j_idt83" method="post" action="/science/planning/yield/target/Ti?yieldChoice=target&amp;element=Ti" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt83" value="j_idt83" />
+<div id="j_idt83:j_idt84" class="ui-datatable ui-widget"><table role="grid" class="yield"><thead><tr><th class="ui-datatable-header ui-widget-header" colspan="10"> Yields for Titanium Targets</th></tr><tr role="row"><th id="j_idt83:j_idt84:j_idt88" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Date</span></div></th><th id="j_idt83:j_idt84:j_idt90" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Element</span></div></th><th id="j_idt83:j_idt84:j_idt95" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Isotope /<br />Isomer</span></div></th><th id="j_idt83:j_idt84:j_idt98" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>A/q</span></div></th><th id="j_idt83:j_idt84:j_idt100" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Half-life</span></div></th><th id="j_idt83:j_idt84:j_idt102" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Yield<br />(1/s)</span></div></th><th id="j_idt83:j_idt84:j_idt105" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>p<sup>+</sup> Current<br />(μA)</span></div></th><th id="j_idt83:j_idt84:j_idt108" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Target</span></div></th><th id="j_idt83:j_idt84:j_idt114" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Ion Source</span></div></th><th id="j_idt83:j_idt84:j_idt117" class="ui-state-default ui-sortable-column" role="columnheader"><div class="ui-dt-c"><span class="ui-sortable-column-icon ui-icon ui-icon-carat-2-n-s"></span><span>Comment</span></div></th></tr></thead><tfoot><tr><td class="ui-datatable-footer ui-widget-header" colspan="10">73 records retrieved on 2016-09-16 22:49:38 PDT</td></tr></tfoot><tbody id="j_idt83:j_idt84_data" class="ui-datatable-data ui-widget-content"><tr data-ri="0" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-06-15</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K44g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">44.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            22.13 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.20E9</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="1" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-06-15</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ca" class="element ALKALINE_EARTH_METAL" title="View all calcium yields">
+                            <sub style="font-size:8px;margin-right:1px;">20</sub><b>Ca</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ca39g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">39.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            859.6 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.60E5</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=TRILIS+Re+surface" title="View TRILIS Re surface target elements">TRILIS Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="2" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-06-14</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ca" class="element ALKALINE_EARTH_METAL" title="View all calcium yields">
+                            <sub style="font-size:8px;margin-right:1px;">20</sub><b>Ca</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ca47g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">47.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            4.54 d
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">6.90E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=TRILIS+Re+surface" title="View TRILIS Re surface target elements">TRILIS Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="3" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-06-14</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K47g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">47.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            17.5 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.00E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="4" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-06-06</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K37g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">37.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.2 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">8.10E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="5" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-28</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">5.43</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            7.64 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.60E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        38K7+
+                    </div></td></tr><tr data-ri="6" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-28</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K38m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">5.43</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            924.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.30E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        38mK7+
+                    </div></td></tr><tr data-ri="7" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-27</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">38.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            7.64 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">6.20E9</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="8" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-27</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K38m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">38.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            924.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.80E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="9" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-26</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K36g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">36.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            341.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.30E5</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="10" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-26</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K35g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">35.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            178.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">7.40E3</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="11" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-26</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K36g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">5.14</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            341.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.30E3</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        36K7+
+                    </div></td></tr><tr data-ri="12" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Na" class="element ALKALI_METAL" title="View all sodium yields">
+                            <sub style="font-size:8px;margin-right:1px;">11</sub><b>Na</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Na26g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">26.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.1 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.80E7</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="13" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Na" class="element ALKALI_METAL" title="View all sodium yields">
+                            <sub style="font-size:8px;margin-right:1px;">11</sub><b>Na</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Na27g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">27.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            301.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.40E6</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="14" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Li" class="element ALKALI_METAL" title="View all lithium yields">
+                            <sub style="font-size:8px;margin-right:1px;">3</sub><b>Li</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Li8g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">8.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            839.9 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">5.80E6</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="15" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Na" class="element ALKALI_METAL" title="View all sodium yields">
+                            <sub style="font-size:8px;margin-right:1px;">11</sub><b>Na</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Na25g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">25.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            59.1 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.50E7</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="16" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Na" class="element ALKALI_METAL" title="View all sodium yields">
+                            <sub style="font-size:8px;margin-right:1px;">11</sub><b>Na</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Na24g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">24.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            15.00 h
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.70E6</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="17" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Na" class="element ALKALI_METAL" title="View all sodium yields">
+                            <sub style="font-size:8px;margin-right:1px;">11</sub><b>Na</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Na24m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">24.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            20.2 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.90E4</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="18" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Na" class="element ALKALI_METAL" title="View all sodium yields">
+                            <sub style="font-size:8px;margin-right:1px;">11</sub><b>Na</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Na21g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">21.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            22.5 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.40E7</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="19" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2014-05-21</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Na" class="element ALKALI_METAL" title="View all sodium yields">
+                            <sub style="font-size:8px;margin-right:1px;">11</sub><b>Na</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Na20g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">20.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            447.9 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">6.60E5</div></td><td role="gridcell"><div class="ui-dt-c">50</div></td><td role="gridcell"><div class="ui-dt-c">ITE-TM3-TiC#4-HP-SIS</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="20" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2012-11-28</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K37g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">37.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.2 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.80E7</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">ITW-TM1-TiC#3</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="21" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2012-11-28</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K37g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">37.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.2 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.20E7</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">ITW-TM1-TiC#3</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="22" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Al" class="element POOR_METAL" title="View all aluminium yields">
+                            <sub style="font-size:8px;margin-right:1px;">13</sub><b>Al</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Al28g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">28.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            2.24 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">7.90E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="23" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Al" class="element POOR_METAL" title="View all aluminium yields">
+                            <sub style="font-size:8px;margin-right:1px;">13</sub><b>Al</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Al29g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">29.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            6.56 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.20E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="24" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Al" class="element POOR_METAL" title="View all aluminium yields">
+                            <sub style="font-size:8px;margin-right:1px;">13</sub><b>Al</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Al30g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">30.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            3.6 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">7.40E3</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="25" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Al" class="element POOR_METAL" title="View all aluminium yields">
+                            <sub style="font-size:8px;margin-right:1px;">13</sub><b>Al</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Al26m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">26.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            6.3 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.10E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="26" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ar" class="element NOBLE_GAS" title="View all argon yields">
+                            <sub style="font-size:8px;margin-right:1px;">18</sub><b>Ar</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ar33g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">33.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            173.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">7.00E2</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="27" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ar" class="element NOBLE_GAS" title="View all argon yields">
+                            <sub style="font-size:8px;margin-right:1px;">18</sub><b>Ar</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ar34g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">34.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            843.8 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.90E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="28" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ar" class="element NOBLE_GAS" title="View all argon yields">
+                            <sub style="font-size:8px;margin-right:1px;">18</sub><b>Ar</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ar35g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">35.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.8 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">6.50E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="29" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ar" class="element NOBLE_GAS" title="View all argon yields">
+                            <sub style="font-size:8px;margin-right:1px;">18</sub><b>Ar</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ar41g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">41.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.83 h
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">7.00E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="30" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ar" class="element NOBLE_GAS" title="View all argon yields">
+                            <sub style="font-size:8px;margin-right:1px;">18</sub><b>Ar</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ar43g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">43.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            5.37 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.60E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="31" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ar" class="element NOBLE_GAS" title="View all argon yields">
+                            <sub style="font-size:8px;margin-right:1px;">18</sub><b>Ar</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ar44g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">44.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            11.87 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.20E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="32" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ar" class="element NOBLE_GAS" title="View all argon yields">
+                            <sub style="font-size:8px;margin-right:1px;">18</sub><b>Ar</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ar45g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">45.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            21.5 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">7.50E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="33" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">38.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            37.24 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.20E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="34" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl39g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">39.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            56.20 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.20E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="35" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl40g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">40.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.35 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.10E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="36" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl41g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">41.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            38.4 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.00E5</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="37" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">39.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            37.24 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">6.50E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        38gClH
+                    </div></td></tr><tr data-ri="38" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl39g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">40.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            56.20 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.00E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        39ClH
+                    </div></td></tr><tr data-ri="39" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl40g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">41.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.35 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.30E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        40ClH
+                    </div></td></tr><tr data-ri="40" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl41g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">42.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            38.4 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.90E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        41ClH
+                    </div></td></tr><tr data-ri="41" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">19.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            37.24 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.40E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        38gCl2+
+                    </div></td></tr><tr data-ri="42" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl40g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">20.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.35 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">9.40E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        40Cl2+
+                    </div></td></tr><tr data-ri="43" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl34m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">34.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            31.99 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.40E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="44" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl34m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">35.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            31.99 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.90E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        34mClH
+                    </div></td></tr><tr data-ri="45" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Cl" class="element HALOGEN" title="View all chlorine yields">
+                            <sub style="font-size:8px;margin-right:1px;">17</sub><b>Cl</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Cl34m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">17.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            31.99 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.30E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        34mCl2+
+                    </div></td></tr><tr data-ri="46" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/He" class="element NOBLE_GAS" title="View all helium yields">
+                            <sub style="font-size:8px;margin-right:1px;">2</sub><b>He</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            He6g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">6.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            806.7 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.00E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="47" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/He" class="element NOBLE_GAS" title="View all helium yields">
+                            <sub style="font-size:8px;margin-right:1px;">2</sub><b>He</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            He8g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">8.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            119.1 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.90E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="48" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">38.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            7.64 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">8.70E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="49" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K42g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">42.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            12.36 h
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.00E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="50" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K43g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">43.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            22.30 h
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.90E9</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="51" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K44g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">44.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            22.13 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.10E8</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="52" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K45g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">45.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            17.81 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">8.90E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="53" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K46g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">46.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.75 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">5.80E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="54" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ne" class="element NOBLE_GAS" title="View all neon yields">
+                            <sub style="font-size:8px;margin-right:1px;">10</sub><b>Ne</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ne18g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">18.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.7 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.30E4</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="55" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ne" class="element NOBLE_GAS" title="View all neon yields">
+                            <sub style="font-size:8px;margin-right:1px;">10</sub><b>Ne</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ne19g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">19.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            17.2 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">5.00E5</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="56" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ne" class="element NOBLE_GAS" title="View all neon yields">
+                            <sub style="font-size:8px;margin-right:1px;">10</sub><b>Ne</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ne23g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">23.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            37.2 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.60E7</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="57" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ne" class="element NOBLE_GAS" title="View all neon yields">
+                            <sub style="font-size:8px;margin-right:1px;">10</sub><b>Ne</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ne24g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">24.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            3.38 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.40E6</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="58" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ne" class="element NOBLE_GAS" title="View all neon yields">
+                            <sub style="font-size:8px;margin-right:1px;">10</sub><b>Ne</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ne25g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">25.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            602.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.30E5</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="59" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/O" class="element NON_METAL" title="View all oxygen yields">
+                            <sub style="font-size:8px;margin-right:1px;">8</sub><b>O</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            O19g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">31.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            26.9 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.40E3</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        12C19O
+                    </div></td></tr><tr data-ri="60" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2006-12-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/O" class="element NON_METAL" title="View all oxygen yields">
+                            <sub style="font-size:8px;margin-right:1px;">8</sub><b>O</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            O20g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">32.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            13.5 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">5.30E2</div></td><td role="gridcell"><div class="ui-dt-c">70</div></td><td role="gridcell"><div class="ui-dt-c">TiC #2 HP</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=FEBIAD" title="View FEBIAD target elements">FEBIAD</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        12C20O
+                    </div></td></tr><tr data-ri="61" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ca" class="element ALKALINE_EARTH_METAL" title="View all calcium yields">
+                            <sub style="font-size:8px;margin-right:1px;">20</sub><b>Ca</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ca38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">57.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            440.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.80E3</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        38Ca19F
+                    </div></td></tr><tr data-ri="62" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ca" class="element ALKALINE_EARTH_METAL" title="View all calcium yields">
+                            <sub style="font-size:8px;margin-right:1px;">20</sub><b>Ca</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ca39g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">39.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            859.6 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.00E4</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="63" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/Ca" class="element ALKALINE_EARTH_METAL" title="View all calcium yields">
+                            <sub style="font-size:8px;margin-right:1px;">20</sub><b>Ca</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            Ca39g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">58.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            859.6 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.10E5</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        39Ca19F
+                    </div></td></tr><tr data-ri="64" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K35g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">35.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            178.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">3.50E3</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="65" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K36g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">36.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            341.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.90E5</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="66" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K37g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">37.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            1.2 s
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">6.40E7</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="67" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K38g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">38.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            7.64 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.80E10</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="68" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K42g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">42.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            12.36 h
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.50E11</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="69" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K43g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">43.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            22.30 h
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">4.60E10</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="70" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K44g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">44.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            22.13 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">2.60E10</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="71" class="ui-widget-content ui-datatable-odd" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K45g
+                    </div></td><td role="gridcell"><div class="ui-dt-c">45.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            17.81 m
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">1.60E9</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr><tr data-ri="72" class="ui-widget-content ui-datatable-even" role="row"><td role="gridcell"><div class="ui-dt-c"><span style="white-space: nowrap;">2002-09-01</span></div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/beam/K" class="element ALKALI_METAL" title="View all potassium yields">
+                            <sub style="font-size:8px;margin-right:1px;">19</sub><b>K</b></a></div></td><td role="gridcell"><div class="ui-dt-c">
+                            K38m1
+                    </div></td><td role="gridcell"><div class="ui-dt-c">38.00</div></td><td role="gridcell"><div class="ui-dt-c">
+                        <span style="white-space: nowrap">
+                            924.0 ms
+                        </span></div></td><td role="gridcell"><div class="ui-dt-c">7.40E7</div></td><td role="gridcell"><div class="ui-dt-c">40</div></td><td role="gridcell"><div class="ui-dt-c">TiC #1</div></td><td role="gridcell"><div class="ui-dt-c"><a href="/science/planning/yield/target?ionSource=Re+surface" title="View Re surface target elements">Re surface</a></div></td><td role="gridcell"><div class="ui-dt-c">
+                        
+                    </div></td></tr></tbody></table></div><script id="j_idt83:j_idt84_s" type="text/javascript">PrimeFaces.cw('DataTable','widget_j_idt83_j_idt84',{id:'j_idt83:j_idt84'});</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="4225505562179409926:6386329455216489983" autocomplete="off" />
+</form><div id="globalMessages"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+
+
+            </div>
+            
+
+
+
+            
+            <div id="footer">
+                <div id="block-block-11" class="block block-block">
+
+                    <div class="content">
+                        <div id="footer-row">
+                            <div id="footer-body">
+                                    <ul class="menu">
+                                        <li class="leaf"><a href="http://www.triumf.ca/directory" title="Directory">Find People</a></li>
+                                        <li class="leaf"><a href="http://www.triumf.ca/home/for-media/publicationsgallery">Media</a></li>
+                                        <li class="leaf first"><a href="http://www.triumf.ca/home/contact-us">Contact Us</a></li>
+                                        <li class="leaf" style="color:white">Application Usage Support: <a href="mailto:sciencediv@triumf.ca">Science Division Office</a></li>
+                                        <li class="leaf" style="color:white">Application Problem Support: <a href="mailto:mis@triumf.ca">MIS Group</a></li>
+                                        <li class="leaf last" style="color: white">Science Applications v.4.2.46</li>
+                                    </ul>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div></body>
+</html>

@@ -1,0 +1,5 @@
+export JAMESPHYS=/home/jsmallcombe/codes/JPhysics
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAMESPHYS/bin:$JAMESPHYS/bin/build:$JAMESPHYS
+export CPATH=$CPATH:$JAMESPHYS/include
+export PATH=$PATH:$JAMESPHYS/include:$JAMESPHYS/src:$JAMESPHYS/bin:$JAMESPHYS/bin/build
+export LIBRARY_PATH=$LIBRARY_PATH:$JAMESPHYS/bin:$JAMESPHYS/bin/build:$JAMESPHYS/src:$JAMESPHYS/include:$JAMESPHYS
