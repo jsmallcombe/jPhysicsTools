@@ -1,1 +1,1 @@
-{gSystem->Load("libjames_phys_export.so");jsigfig(1,1);}
+{gSystem->Load("libjames_phys_export.so");cos2(0.1);}

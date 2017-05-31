@@ -8,20 +8,6 @@
 
 #include "james_root_maths.h"
 
-
-void higher_jd(double &low,double &high){if(low>high)swap_jd(low,high);}
-void swap_jd(double &a,double &b){double x=a;a=b;b=x;}
-
-double jsigfig(double in,int sf){
-  if(in==0)return 0;
-  int sfis=floor(log10(abs(in)));
-
-  double fac=pow(10,sfis-sf+1);
-
-  return round(in/fac)*fac;
-}
-
-
 /////////////////////////////////////////////////////
 /////////// Trig functions for lazy typing   ////////
 /////////////////////////////////////////////////////

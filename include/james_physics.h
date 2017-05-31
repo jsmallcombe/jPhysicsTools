@@ -64,13 +64,17 @@ double neck_TKE_manea(double,double,double,double);
 double safe_coulex_angle(double,double,double,double,double); //[Inputs(A1,Z1,A2,Z2,E_lab)]
 
 // Returns the maximum beam energy for safe coulex distance of approach for a given CM beam scattering angle
-double safe_coulex_beam(double,double,double,double,double); //[Inputs(A1,Z1,A2,Z2,rad_cm)]
+double safe_coulex_beam(double,double,double,double,double=pi); //[Inputs(A1,Z1,A2,Z2,rad_cm)]
 
 // Returns angle at which ruthford scattering uncleam (rad) [Inputs(A1,Z1,A2,Z2,E_cm)]
 double happy_ruth_theta(double,double,double,double,double);
 
 // Returns integrated 2pi rutherford_crosssection in mb [Inputs(Z1,Z2,E_cm,thetamin_cm,thetamax_cm)]
-double rutherford_crosssection(double,double,double,double,double);
+double rutherford_crosssection(double z1,double z2,double EcmMeV,double thetamin_cm,double thetamax_cm);
+
+// Returns integrated 2pi rutherford_crosssection in mb
+// mode 0=beam only 1=targ only 2=either
+double rutherford_crosssection_lab(double AB,double AT,double Z1,double Z2,double Ebeam,double thetamin,double thetamax,int mode=0);
 
   ///////////////////////////////////////////////////////////////
  ////////// Single Body Relativistic E & P calculators   ///////
@@ -83,10 +87,10 @@ double get_relE_mom(double,double);
 double get_relE_KE(double,double);
 
 // Returns P relativistic in current frame [Inputs(KE_frame (MeV), Mass_0 (amu), Print (TRUE/FALSE))]
-double get_rel_mom(double,double,bool=false);
+double get_rel_mom(double KEMeV,double mass0,bool print=false);
 
 // Returns KE in current frame [Inputs(P_frame (MeV/c), Mass_0 (amu), Print (TRUE/FALSE))]
-double get_KE(double,double,bool=false);
+double get_KE(double P,double mass0,bool print=false);
 
 // Extract KE in current frame from TLorentzVector [Inputs(TLorentzVector*)]    Ep 4-vec in MeV
 double get_KE(TLorentzVector*);
@@ -133,7 +137,9 @@ inline double get_beta(double& gamma){return sqrt(1-(1/(gamma*gamma)));}
 //////////////////////////////////// 
 
 // Returns Total KE in CoM for beam + target [Inputs(P_beam (MeV/c), Mass_beam (amu), Mass_target (amu))]
-double get_com_KE(double,double,double);
+double get_com_KE(double Pbeam,double AB,double AT);
+
+double get_com_KE_MeVbeam(double MeVbeam,double AB,double AT);
 
 // Returns Total KE in CoM from P vectors [Inputs(P_vector_1 (MeV/c), Mass_1 (amu), P_vector_2 (MeV/c), Mass_2 (amu))]
 double get_com_KE(TVector3,double,TVector3,double);
@@ -268,6 +274,14 @@ double* kinetic_CM_to_lab_angle(double,double,double,double,double,double);
 // [Inputs(Ebeam (MeV), Mass_beam (amu), Mass_targ (amu), CM_angle_beam (radians))]
 double* kinetic_CM_to_lab_angle_elastic(double,double,double,double);
 
+  ////////////////////////////////////////
+ /////////    Detector Angles     ///////
+////////////////////////////////////////
+
+// returns  CoM angles for ejectile given lab theta for ejectile/recoil
+double* DetectorCoMAngles(double BeamMeV,double massbeam,double masstarget,double massejectile,double massrecoil,double thetamin,double thetamax);
+
+double* DetectorCoMAnglesElastic(double BeamMeV,double massbeam,double masstarget,double thetamin,double thetamax);
 
   /////////////////////////////////////////////////
  ///////// Lab to CoM single reverse boost    ////
@@ -276,7 +290,7 @@ double* kinetic_CM_to_lab_angle_elastic(double,double,double,double);
 // Calc possible CoM angles for given lab IF CoM known
 // Returns 2 CoM angles and 2 P_lab and theta_lab_max (2 solutions NOT 2 particles)
 // [Inputs(Beta_CoM, Theta_lab (radians), P_CoM (MeV/c), Mass_0 (amu))]
-double* lab_boost_CMP_query(double,double,double,double);
+double* lab_boost_CMP_query(double combeta,double ,double,double);
 // ret[0] CoM_thetaA1
 // ret[1] lab_PA1
 // ret[2] CoM_thetaA2

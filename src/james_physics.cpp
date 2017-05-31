@@ -92,6 +92,7 @@ double safe_coulex_angle(double AB,double ZB,double AT,double ZT,double e_lab){ 
 double safe_coulex_beam(double A1,double Z1,double A2,double Z2,double theta_cm){ //input AZAZ,rad output in MeV
 	double rmin=safe_r(A1,A2,0);//hardsphere touching distance + a little in fm
 	double ang=sqrt((1+cos(theta_cm))/(1-cos(theta_cm)))*cos(theta_cm/2)/(1-sin(theta_cm/2));
+	if(!(ang>0))ang=2;
 	double KE_cm_tot=jam_phys_e4pieps*Z1*Z2*ang/(2*rmin);
 	
 	return get_KE(reverseal_mom_calc(momentum_energysplit_CoM(KE_cm_tot,A1,A2),A1, A2),A1);
@@ -100,11 +101,11 @@ double safe_coulex_beam(double A1,double Z1,double A2,double Z2,double theta_cm)
 // Return the maximum CM beam scattering angle for safe coulex distance of approach, given CoM total KE
 double happy_ruth_theta(double A1,double Z1,double A2,double Z2,double e_cm){ //input AZAZ,MeV output in rad
 	double rmin=safe_r(A1,A2,0);//hardsphere touching distance + a little in fm
-	double Etouch=jam_phys_e4pieps*Z1*Z2/rmin;//MeV
+	double Etouch=jam_phys_e4pieps*Z1*Z2/rmin;//MeV. not actually touching
 // 	double Etouch=classical_barrier(A1,Z1,A2,Z2);
 	if(e_cm<=Etouch) return pi;
 
-	double b=(sqrt(1-(Etouch/e_cm)))*rmin;//impact parameter for JUUST touching
+	double b=(sqrt(1-(Etouch/e_cm)))*rmin;//impact parameter for selected rmin
 	
 	double alpha=jam_phys_e4pieps*Z1*Z2/(e_cm*b);
 	return 2*asin(alpha/sqrt(4+alpha*alpha)); //theta from that impact parameter cm
@@ -116,14 +117,44 @@ double rutherford_crosssection(double Z1,double Z2,double e_cm,double thetamin,d
 	if(thetamin<1E-6)thetamin=1E-6;
 	if(thetamax>pi)thetamax=pi;
 
-	double constterm=jam_phys_e4pieps*Z1*Z2/(4*e_cm);
-	constterm*=constterm;
+	double closest=jam_phys_e4pieps*Z1*Z2/(e_cm);
 	
-	double angular_dep=(1/(sin(thetamin/2)*sin(thetamin/2)))-(1/(sin(thetamax/2)*sin(thetamax/2)));
-	angular_dep*=4*pi;
+	// e^2/4*pi*epsilion_0 = finestructure * hbar * c = 197.3/137 MeV fm
+	
+	double constterm=closest*closest/16;
+	
+	double angular_dep=(2/(sin(thetamin/2)*sin(thetamin/2)))-(2/(sin(thetamax/2)*sin(thetamax/2)));
+	angular_dep*=2*pi;
 	
 	return constterm*angular_dep*10; //multiply by 10 converts from fm^2 to mb
 }
+
+double rutherford_crosssection_lab(double AB,double AT,double Z1,double Z2,double Ebeam,double thetamin,double thetamax,int mode){
+	
+	double* ret=DetectorCoMAnglesElastic(Ebeam,AB,AT,thetamin,thetamax);
+	
+	double Ecm=get_com_KE_MeVbeam(Ebeam,AB,AT);
+
+	double beam=0;
+	if(ret[0]>0.0001)beam+=rutherford_crosssection(Z1,Z2,Ecm,ret[0],ret[1]);
+	if(ret[2]>0.0001)beam+=rutherford_crosssection(Z1,Z2,Ecm,ret[2],ret[3]);
+
+	double targ=0;
+	if(ret[4]>0.0001)targ+=rutherford_crosssection(Z1,Z2,Ecm,ret[4],ret[5]);
+	if(ret[6]>0.0001)targ+=rutherford_crosssection(Z1,Z2,Ecm,ret[6],ret[7]);
+	
+	delete ret;
+	
+	if(mode==0)return beam;
+	if(mode==1)return targ;
+	return beam+targ;//We dont use the fancy overlap part of ret for this as for rutherford you usually want total rate, even if it includes double hits
+}
+
+
+
+
+
+
 
 
   ///////////////////////////////////////////////////////////////
@@ -228,6 +259,10 @@ double get_com_KE(double mom,double massA,double massB){//input mom in MeV/c and
 	double invarient_S=sqrt(E_lab*E_lab-mom*mom);
 	return invarient_S - (massA+massB)*jam_phys_amu;
 }
+double get_com_KE_MeVbeam(double MeVbeam,double AB,double AT){
+	return get_com_KE(get_rel_mom(MeVbeam,AB),AB,AT);
+}
+
 double get_com_KE(TVector3 momA,double massA,TVector3 momB,double massB){//input mom in MeV/c and 2 masses in amu
 	double E_lab= get_relE_mom(momA.Mag(),massA)+get_relE_mom(momB.Mag(),massB);
 	double invarient_S=sqrt(E_lab*E_lab-((momA+momB).Mag())*((momA+momB).Mag()));
@@ -610,6 +645,122 @@ double* kinetic_CM_to_lab_angle(double Ebeam,double AB,double AT,double thetaCM,
 
 double* kinetic_CM_to_lab_angle_elastic(double Ebeam,double AB,double AT,double thetaCM){
 	return kinetic_CM_to_lab_angle(Ebeam,AB,AT,thetaCM,AB,AT);
+}
+
+  ////////////////////////////////////////
+ /////////    Detector Angles     ///////
+////////////////////////////////////////
+
+double* DetectorCoMAngles(double energy,double AB,double AT,double AE,double AR,double lower,double upper){
+	//Returns a series of CoM angles corresponsing to the ejectile
+	//ret[0,1] Ejectile CoM angle range lower,upper A for ejectile detection
+	//ret[2,3] Ejectile CoM angle range lower,upper B for ejectile detection
+	//ret[4,5] Ejectile CoM angle range lower,upper A for recoil detection
+	//ret[6,7] Ejectile CoM angle range lower,upper B for recoil detection
+	//ret[8,9] Ejectile CoM angle range lower,upper A for either detection
+	//ret[10,12] Ejectile CoM angle range lower,upper B for either detection
+	//ret[12,13] Ejectile CoM angle range lower,upper C for either detection
+	//ret[14,15] Ejectile CoM angle range lower,upper D for either detection
+	
+	
+	double u[4],l[4];
+	for(int i=0;i<4;i++){u[i]=-1;l[i]=-1;}
+	
+	higher_jd(lower,upper);//idiot check
+
+	////// Ejectile (beam in elastic) ///////
+	// Determine the possible CM angles for a given beam lab angle
+	double* ret=kinetic_lab_calcs_P(energy,AB,AT,lower,AE,AR);
+	
+	if(ret[2]>lower){// ret[2] is the largest lab angle available to the beam, important in inverse kinematics
+			// this checks the beam can ever reach the detector, before continuing
+		
+		l[0]=ret[6];l[1]=ret[12];// Save the two possible CM angles, if there is only one the second will be 0
+		if(ret[2]<upper){// check if the beam can cover the whole detector
+			u[0]=l[1];l[1]=-1;// in the case where it cannot there will be two CM solutions for lower angle
+					  // and the CM range between the two covers the lab angles from lower to max
+		}else{
+			delete ret; //If it can reach the outer edge then fetch the one or two solutions for the upper in CM
+			ret=kinetic_lab_calcs_P(energy,AB,AT,upper,AE,AR);
+// 			kinetic_lab_calcs_readout(ret);
+			u[0]=ret[6];u[1]=ret[12];// in the case of two u[] and l[] will be correctly paired up as both are given smallest CM angle first by "kinetic_lab_calcs_P"
+		}
+	}
+	delete ret;
+	
+	
+	////// Recoil (target in elastic) ///////
+	// Slightly different because we want to check angle of recoil for detection
+	// But we want to save the CM angle of ejectile, because that is how the xsec distribution is given
+	
+	ret=kinetic_lab_calcs_P(energy,AB,AT,lower,AR,AE);;//Switched beam and target on output of the so we can give target angle
+	
+	if(ret[2]>lower){
+		l[2]=ret[7];l[3]=ret[13];// Note different ret[] taken because we ask the CM angle of the opposite particle to the Lab angle input
+		if(ret[2]<upper){
+			u[2]=l[3];l[3]=-1;
+		}else{
+			delete ret;
+			ret=kinetic_lab_calcs_P(energy,AB,AT,upper,AR,AE);
+			u[2]=ret[7];u[3]=ret[13];
+		}
+	}
+	delete ret;
+	
+	// Convert to degrees
+	// Quickly sort the ordering as for a second CM solution the "lower" will have a larger CM angle than the "upper"
+	for(int i=0;i<4;i++){
+		higher_jd(l[i],u[i]);
+	}
+	
+	////// EITHER ///////
+	////// B or T //////
+	////// SUM    //////
+	
+	// This is a little more involved because we dont want to just add the two together as that may double count xsec
+	// We need to check for overlap in their CM angular ranges
+	
+	double su[4],sl[4];
+	for(int i=0;i<4;i++){;su[i]=u[i];sl[i]=l[i];} //copy over the range delimiters 
+
+	for(int i=0;i<4;i++){
+		for(int j=i+1;j<4;j++){// compare each pair to all above it
+			if((su[i]>sl[j])&&(sl[i]<su[j])){// If there is any overlap
+				higher_jd(su[i],su[j]);// copy the outer limits to one entry
+				higher_jd(sl[j],sl[i]);
+				su[i]=-1;// delete the other
+				sl[i]=-1;
+				j=4;
+			}
+		}		
+	}
+	// Now we have dealt with any overlaps
+	
+	// It is possible any remaining separate ranges are not cm ordered
+	for(int i=0;i<4;i++){
+		for(int j=i+1;j<4;j++){
+			if(sl[j]<sl[i]){
+				swap_jd(sl[j],sl[i]);
+				swap_jd(su[j],su[i]);
+			}
+		}
+	}
+	
+	ret=new double[16];
+	
+	for(int i=0;i<4;i++){
+		ret[i*2]=l[i];
+		ret[1+i*2]=u[i];
+	
+		ret[8+i*2]=sl[i];
+		ret[9+i*2]=su[i];
+	}
+	
+	return ret;	
+}
+
+double* DetectorCoMAnglesElastic(double BeamMeV,double massbeam,double masstarget,double thetamin,double thetamax){
+	return DetectorCoMAngles(BeamMeV, massbeam, masstarget,massbeam, masstarget, thetamin, thetamax);
 }
 
 

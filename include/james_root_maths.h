@@ -16,12 +16,6 @@
 using namespace std;
 
 
-void higher_jd(double &low,double &high);
-void swap_jd(double &,double &);
-
-
-double jsigfig(double,int);
-
 /////////////////////////////////////////////////////
 /////////// Trig functions for lazy typing   ////////
 /////////////////////////////////////////////////////

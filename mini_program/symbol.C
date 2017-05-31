@@ -2,7 +2,8 @@
 #include <iostream>     // std::cout
 #include <sstream>      // std::stringstream
 
-#include "jlibmaster.h"
+#include "jphysmaster.h"
+
 
 using namespace::std;
 int main(int argc, const char * arg[]){

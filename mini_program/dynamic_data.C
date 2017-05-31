@@ -8,7 +8,7 @@
 #include <TObject.h>
 #include <TApplication.h>
 
-#include "jlibmaster.h"
+#include "jphysmaster.h"
 
 using namespace::std;
 int main(int argc, char *argv[]){

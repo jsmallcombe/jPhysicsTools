@@ -53,7 +53,7 @@ const double jam_phys_511=0.510998928; // MeV/c^2
 const double jam_phys_np_mass=1.293367; // MeV/c^2   
 const double jam_phys_speed_c=299792458; // m/s
 const double jam_phys_speed_c_mm_ns=299.792458; // mm/ns
-const double jam_phys_e4pieps=1.4399644895; // MeV fm 
+const double jam_phys_e4pieps=1.4399644895; // MeV fm  equivilant to finestruc*hbar*c
 const double jam_phys_charge=1.60217657e-19; // C
 
 using namespace std;
