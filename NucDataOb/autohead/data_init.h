@@ -1,5 +1,6 @@
 double nuclear_data_ob::beta[128][256]={{0}};
 double nuclear_data_ob::density_gcm3[256]={0};
+double nuclear_data_ob::element_mass[256]={0};
 double nuclear_data_ob::Kbinding[256]={0};
 double nuclear_data_ob::L0_2[128][256]={{0}};
 double nuclear_data_ob::L0_3[128][256]={{0}};

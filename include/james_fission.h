@@ -26,7 +26,6 @@
 #include "james_target.h"
 #include "james_root_maths.h"
 
-#include "range.h"
 using namespace std;
 
 

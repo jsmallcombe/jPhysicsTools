@@ -4,6 +4,9 @@ static double get_beta(int,int);
 //Returns density_gcm3 [Inputs(Z)]
 static double get_density_gcm3(int);
 
+//Returns element_mass [Inputs(Z)]
+static double get_element_mass(int);
+
 //Returns Kbinding [Inputs(Z)]
 static double get_Kbinding(int);
 

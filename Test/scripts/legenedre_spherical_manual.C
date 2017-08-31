@@ -1,5 +1,16 @@
+//Draw all m values separately for a give L
+//Compare 2 methods for calculation
+//S = 0 draw associate polynomials 
+//S = 1 draw spherical harmonics 
 void draw_leg(int L,int S=0){
 
+	string title="associate polynomials";
+	if(S>0){
+		S=1;
+		title="spherical harmonics";
+	}
+	else S=0;
+	
 	bool divid=true;
 
 	int fin=2;
@@ -12,6 +23,10 @@ void draw_leg(int L,int S=0){
 		TCanvas* divplot=new TCanvas();
 		divplot->Divide(L*2+1);
 		divid=(!divid);
+		
+		if(divid)divplot->SetTitle((title+" method ratio").c_str());
+		else divplot->SetTitle((title+" method overlay").c_str());
+		
 		int m=-L;
 		for(int l=1;l<=L*2+1;l++){
 			TGraph bob,bill;
@@ -109,6 +124,9 @@ void draw_leg(int L,int S=0){
 			divplot->cd(l);
 			gPad->Update();
 			bob.SetLineColor(2);
+			stringstream ss;
+			ss<<"L = "<<L<<" m = "<<m;
+			bob.SetTitle(ss.str().c_str());
 			bob.DrawClone("AL");
 			if(!divid)bill.DrawClone("SAMEL");
 			
@@ -118,39 +136,52 @@ void draw_leg(int L,int S=0){
 	}
 }
 
-void draw_sum_leg(int L_max){
+// Draw the pure lm distributions for all values of m
+// Draw the 2 panels lm spherical harmonics and lm gamma distributions
+// Note: gamma distributions are functions of Ylm Ylm-1 and Ylm+1 so not directly comparable
+void draw_seper_leg(int L){
+	spherical_harmonic sphe(L);
 	
 	for(int k=0;k<2;k++){
-	TCanvas* divplot=new TCanvas();
-	divplot->Divide(L_max);
-	if(k==0)divplot->SetTitle("sphe");else divplot->SetTitle("gamma");
-		for(int L=1;L<=L_max;L++){
-			
-			spherical_harmonic sphe(L);
-			TGraph bob,bill;
+		TCanvas* divplot=new TCanvas();
+		divplot->Divide((2*L)+1);
+		if(k==0)divplot->SetTitle("sphe");else divplot->SetTitle("gamma");
+		cout<<endl;
+		for(int M=-L;M<=L;M++){
+				
+			TGraph bob;
 			
 			for(int i=0;i<1000;i++){
-				double A=0,B=0;
 				double theta=pi*(double)i/1000.0;
-				double x=cos(theta);	
-				for(int m=-L;m<=L;m++){
-					if(k==0)A+=sphe.modsq(m,x);
-					else A+=sphe.gamma_Z(m,x);
-					if(m==L-1)B=A;
-				}
-				bob.SetPoint(bob.GetN(),theta,B);
-				bill.SetPoint(bill.GetN(),theta,A);	
+				double x=cos(theta);
+				double A=0;
+				if(k==0)A+=sphe.modsq(M,x);
+				else A+=sphe.gamma_Z(M,x);
+				bob.SetPoint(bob.GetN(),theta,A);
 			}
 			
-			divplot->cd(L);
+			double integral=0;
+			for(int i=0;i<1000;i++){
+				double theta=pi*(double)i/1000.0;
+				integral+=bob.Eval(theta);
+// 				integral+=sin(theta)*bob.Eval(theta);
+			}			
+			cout<<"m = "<<M<<"     "<<integral<<endl;
+			
+			divplot->cd(M+L+1);
 			gPad->Update();
 			bob.SetLineColor(2);
+			stringstream ss;
+			ss<<"L = "<<L<<" m = "<<M;
+			bob.SetTitle(ss.str().c_str());
 			bob.DrawClone("AL");
-			bill.DrawClone("SAMEL");
 		}
 	}
 }
 
+// Draw the sum of progressive sum of lm distributions from -m to +m
+// Draw the 2 panels spherical harmonics and gamma distributions
+// Note: gamma distributions are functions of Ylm Ylm-1 and Ylm+1 so not directly comparable
 void draw_step_leg(int L){
 	spherical_harmonic sphe(L);
 	
@@ -186,43 +217,10 @@ void draw_step_leg(int L){
 	}
 }
 
-void draw_seper_leg(int L){
-	spherical_harmonic sphe(L);
-	
-	for(int k=0;k<2;k++){
-		TCanvas* divplot=new TCanvas();
-		divplot->Divide((2*L)+1);
-		if(k==0)divplot->SetTitle("sphe");else divplot->SetTitle("gamma");
-		cout<<endl;
-		for(int M=-L;M<=L;M++){
-				
-			TGraph bob;
-			
-			for(int i=0;i<1000;i++){
-				double theta=pi*(double)i/1000.0;
-				double x=cos(theta);
-				double A=0;
-				if(k==0)A+=sphe.modsq(M,x);
-				else A+=sphe.gamma_Z(M,x);
-				bob.SetPoint(bob.GetN(),theta,A);
-			}
-			
-			double integral=0;
-			for(int i=0;i<1000;i++){
-				double theta=pi*(double)i/1000.0;
-				integral+=bob.Eval(theta);
-// 				integral+=sin(theta)*bob.Eval(theta);
-			}			
-			cout<<"m = "<<M<<"     "<<integral<<endl;
-			
-			divplot->cd(M+L+1);
-			gPad->Update();
-			bob.SetLineColor(2);
-			bob.DrawClone("AL");
-		}
-	}
-}
 
+
+//Draw gamma ray distributions for all transitions J=ini -> |J-L| ... |J+L|
+//Draw 2 sets for initial sigma_m = 0.01 and 15 (around 0)
 void draw_gamma(int L,int ini){
 	
 	int fin_min=abs(ini-L);
@@ -259,6 +257,49 @@ void draw_gamma(int L,int ini){
 		p++;
 	}
 }
+
+// strange thing described in title
+// basically shows contribution of last m for sum over all m for different l
+void draw_sum_leg(int L_max){	
+	for(int k=0;k<2;k++){
+	TCanvas* divplot=new TCanvas();
+	divplot->Divide(L_max);
+	if(k==0)divplot->SetTitle("sphe");else divplot->SetTitle("gamma");
+		for(int L=1;L<=L_max;L++){
+			
+			spherical_harmonic sphe(L);
+			TGraph bob,bill;
+			
+			for(int i=0;i<1000;i++){
+				double A=0,B=0;
+				double theta=pi*(double)i/1000.0;
+				double x=cos(theta);	
+				for(int m=-L;m<=L;m++){
+					if(k==0)A+=sphe.modsq(m,x);
+					else A+=sphe.gamma_Z(m,x);
+					if(m==L-1)B=A;
+				}
+				bob.SetPoint(bob.GetN(),theta,B);
+				bill.SetPoint(bill.GetN(),theta,A);	
+			}
+			
+			stringstream ss;
+			ss<<"L = "<<L<<"#sum^{m=L-1}_{m=-L}";
+			if(k==0)ss<<" |Y_{ml}(#theta)|^{2}";
+			else ss<<" Z_{ml}(#theta)";
+		
+			divplot->cd(L);
+			gPad->Update();
+			bob.SetTitle(ss.str().c_str());
+			bob.SetLineColor(2);
+			bob.SetMaximum(1);
+			bob.SetMinimum(0);
+			bob.DrawClone("AL");
+			bill.DrawClone("SAMEL");
+		}
+	}
+}
+
 
 void legenedre_spherical_manual(){
 	//Do stuff

@@ -175,18 +175,18 @@ double nuclear_data_ob::S2p(int z,int a){return SepCal(z,a,2,0);}
 
 double nuclear_data_ob::nn(int z,int a){
 	if(z%2||a%2)return 0;
-	return Sn(z,a)-Sn(z,a-1);
+	return 0.5*(Sn(z,a)-Sn(z,a+1));
 }
 
 double nuclear_data_ob::pp(int z,int a){
 	if(z%2||a%2)return 0;
-	return Sp(z,a)-Sp(z-1,a-1);
+	return 0.5*(Sp(z,a)-Sp(z+1,a+1));
 }
 
 double nuclear_data_ob::np(int z,int a){
 	if(a%2)return 0;
 	if(!z%2)return 0;
-	return Sp(z,a)+Sn(z,a)-Sp(z,a-1)-Sn(z-1,a-1);
+	return -0.25*(BE(z+1,a)+BE(z-1,a)+BE(z,a-1)+BE(z,a+1)-4*BE(a,z));//just made this up
 }
 
 double nuclear_data_ob::Qalpha(int z,int a){double pd=SepCal(z,a,2,2);if(pd)return BE(2,4)-pd;return 0;}

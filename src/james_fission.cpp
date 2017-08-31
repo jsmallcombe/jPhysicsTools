@@ -21,7 +21,6 @@ double* mass_split_calc(TVector3 worldhit1,TVector3 worldhit2,TVector3 beamP,dou
 }
 
 //targ_thick[3] angle, clockwise from above in degrees
-//ug/cm2 degrees front = upstream
 double* mass_split_calc(TVector3 worldhit1,TVector3 worldhit2,double mom1,double mom2,double newT,target &targ,double massBero,int reps,TGraph massadj){
 	double* mass= new double[2];
 
@@ -138,35 +137,36 @@ TH2D* eloss_mass_grapher(double emax,double compound_Z, double compound_A, doubl
 	int Z2,int A2,double W2,
 	int Z3,int A3,double W3,
 	int Z4,int A4,double W4){
-
-	if(targ_type<0){
-		nelem = nelm;
-		absorb[0].z = Z1; absorb[0].a = A1; absorb[0].w = W1;
-		absorb[1].z = Z2; absorb[1].a = A2; absorb[1].w = W2;
-		absorb[2].z = Z3; absorb[2].a = A3; absorb[2].w = W3;
-		absorb[3].z = Z4; absorb[3].a = A4; absorb[3].w = W4;
-	}
-	
-	string titl="range_2D_";
-	ostringstream convert;
-	convert << nomthick;
-	titl+=convert.str();
-
-	double* tempd=new double(0);
-	double ratio=compound_Z/compound_A;
-	
-	
-	TH2D* graph = new TH2D(titl.c_str(),titl.c_str(),(int)compound_A,0.5,compound_A+0.5,800,(emax/1600),emax+(emax/1600));
-	
-	for(int i=1;i<compound_A+0.5;i++){
-		for(double j=emax;j>(emax/800);j-=emax/800){	
-			double en=j-passage(0,ratio*i,i,targ_type,targ_Z,targ_A,j,(nomthick)/1000,tempd);
-			if(!(en>0))en=0;
-			graph->SetBinContent(graph->FindBin(i,j),en);
-		}
-	}
-	delete tempd;
-	
-	return graph;
+// 
+// // 	if(targ_type<0){
+// // 		nelem = nelm;
+// // 		absorb[0].z = Z1; absorb[0].a = A1; absorb[0].w = W1;
+// // 		absorb[1].z = Z2; absorb[1].a = A2; absorb[1].w = W2;
+// // 		absorb[2].z = Z3; absorb[2].a = A3; absorb[2].w = W3;
+// // 		absorb[3].z = Z4; absorb[3].a = A4; absorb[3].w = W4;
+// // 	}
+// 	
+// 	string titl="range_2D_";
+// 	ostringstream convert;
+// 	convert << nomthick;
+// 	titl+=convert.str();
+// 
+// 	double* tempd=new double(0);
+// 	double ratio=compound_Z/compound_A;
+// 	
+// 	
+// 	TH2D* graph = new TH2D(titl.c_str(),titl.c_str(),(int)compound_A,0.5,compound_A+0.5,800,(emax/1600),emax+(emax/1600));
+// 	
+// // 	for(int i=1;i<compound_A+0.5;i++){
+// // 		for(double j=emax;j>(emax/800);j-=emax/800){	
+// // 			double en=j-passage(0,ratio*i,i,targ_type,targ_Z,targ_A,j,(nomthick)/1000,tempd);
+// // 			if(!(en>0))en=0;
+// // 			graph->SetBinContent(graph->FindBin(i,j),en);
+// // 		}
+// // 	}
+// 	delete tempd;
+// 	
+// 	return graph;
+	return 0;
 }
 

@@ -6,7 +6,6 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
 #include <assert.h>
 #define G__DICTIONARY
@@ -38,13 +37,62 @@
 namespace std {} using namespace std;
 
 // Header files passed as explicit arguments
-#include "include/james_LeeNucleusExtend.h"
 #include "include/james_nuclear_data_gui.h"
-#include "include/james_nuclear_data_ob.h"
-#include "include/james_root_maths.h"
+#include "include/james_gammarays.h"
+#include "include/james_LeeNucleusExtend.h"
 #include "include/james_physics.h"
+#include "include/james_root_maths.h"
+#include "include/james_nuclear_data_ob.h"
 
 // Header files passed via #pragma extra_include
+
+namespace ROOT {
+   static TClass *cNucleus_Dictionary();
+   static void cNucleus_TClassManip(TClass*);
+   static void *new_cNucleus(void *p = 0);
+   static void *newArray_cNucleus(Long_t size, void *p);
+   static void delete_cNucleus(void *p);
+   static void deleteArray_cNucleus(void *p);
+   static void destruct_cNucleus(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::cNucleus*)
+   {
+      ::cNucleus *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::cNucleus));
+      static ::ROOT::TGenericClassInfo 
+         instance("cNucleus", "LeeNucleus.h", 24,
+                  typeid(::cNucleus), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &cNucleus_Dictionary, isa_proxy, 4,
+                  sizeof(::cNucleus) );
+      instance.SetNew(&new_cNucleus);
+      instance.SetNewArray(&newArray_cNucleus);
+      instance.SetDelete(&delete_cNucleus);
+      instance.SetDeleteArray(&deleteArray_cNucleus);
+      instance.SetDestructor(&destruct_cNucleus);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::cNucleus*)
+   {
+      return GenerateInitInstanceLocal((::cNucleus*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::cNucleus*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+
+   // Dictionary for non-ClassDef classes
+   static TClass *cNucleus_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const ::cNucleus*)0x0)->GetClass();
+      cNucleus_TClassManip(theClass);
+   return theClass;
+   }
+
+   static void cNucleus_TClassManip(TClass* theClass){
+      theClass->CreateAttributeMap();
+      TDictAttributeMap* attrMap( theClass->GetAttributeMap() );
+      attrMap->AddProperty("file_name","include/LeeNucleus.h");
+   }
+
+} // end of namespace ROOT
 
 namespace ROOT {
    static TClass *cNucleusInh_Dictionary();
@@ -62,7 +110,7 @@ namespace ROOT {
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::cNucleusInh));
       static ::ROOT::TGenericClassInfo 
          instance("cNucleusInh", "james_LeeNucleusExtend.h", 26,
-                  typeid(::cNucleusInh), DefineBehavior(ptr, ptr),
+                  typeid(::cNucleusInh), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &cNucleusInh_Dictionary, isa_proxy, 4,
                   sizeof(::cNucleusInh) );
       instance.SetNew(&new_cNucleusInh);
@@ -110,7 +158,7 @@ namespace ROOT {
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::NucDatumSpecifier));
       static ::ROOT::TGenericClassInfo 
          instance("NucDatumSpecifier", "james_LeeNucleusExtend.h", 64,
-                  typeid(::NucDatumSpecifier), DefineBehavior(ptr, ptr),
+                  typeid(::NucDatumSpecifier), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &NucDatumSpecifier_Dictionary, isa_proxy, 4,
                   sizeof(::NucDatumSpecifier) );
       instance.SetNew(&new_NucDatumSpecifier);
@@ -143,246 +191,6 @@ namespace ROOT {
 } // end of namespace ROOT
 
 namespace ROOT {
-   static void *new_LiveDataSlicer(void *p = 0);
-   static void *newArray_LiveDataSlicer(Long_t size, void *p);
-   static void delete_LiveDataSlicer(void *p);
-   static void deleteArray_LiveDataSlicer(void *p);
-   static void destruct_LiveDataSlicer(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataSlicer*)
-   {
-      ::LiveDataSlicer *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataSlicer >(0);
-      static ::ROOT::TGenericClassInfo 
-         instance("LiveDataSlicer", ::LiveDataSlicer::Class_Version(), "james_nuclear_data_gui.h", 58,
-                  typeid(::LiveDataSlicer), DefineBehavior(ptr, ptr),
-                  &::LiveDataSlicer::Dictionary, isa_proxy, 4,
-                  sizeof(::LiveDataSlicer) );
-      instance.SetNew(&new_LiveDataSlicer);
-      instance.SetNewArray(&newArray_LiveDataSlicer);
-      instance.SetDelete(&delete_LiveDataSlicer);
-      instance.SetDeleteArray(&deleteArray_LiveDataSlicer);
-      instance.SetDestructor(&destruct_LiveDataSlicer);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::LiveDataSlicer*)
-   {
-      return GenerateInitInstanceLocal((::LiveDataSlicer*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataSlicer*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-} // end of namespace ROOT
-
-namespace ROOT {
-   static void *new_LiveDataAdder(void *p = 0);
-   static void *newArray_LiveDataAdder(Long_t size, void *p);
-   static void delete_LiveDataAdder(void *p);
-   static void deleteArray_LiveDataAdder(void *p);
-   static void destruct_LiveDataAdder(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataAdder*)
-   {
-      ::LiveDataAdder *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataAdder >(0);
-      static ::ROOT::TGenericClassInfo 
-         instance("LiveDataAdder", ::LiveDataAdder::Class_Version(), "james_nuclear_data_gui.h", 94,
-                  typeid(::LiveDataAdder), DefineBehavior(ptr, ptr),
-                  &::LiveDataAdder::Dictionary, isa_proxy, 4,
-                  sizeof(::LiveDataAdder) );
-      instance.SetNew(&new_LiveDataAdder);
-      instance.SetNewArray(&newArray_LiveDataAdder);
-      instance.SetDelete(&delete_LiveDataAdder);
-      instance.SetDeleteArray(&deleteArray_LiveDataAdder);
-      instance.SetDestructor(&destruct_LiveDataAdder);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::LiveDataAdder*)
-   {
-      return GenerateInitInstanceLocal((::LiveDataAdder*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataAdder*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-} // end of namespace ROOT
-
-namespace ROOT {
-   static void *new_LiveDataAdderLevelSelect(void *p = 0);
-   static void *newArray_LiveDataAdderLevelSelect(Long_t size, void *p);
-   static void delete_LiveDataAdderLevelSelect(void *p);
-   static void deleteArray_LiveDataAdderLevelSelect(void *p);
-   static void destruct_LiveDataAdderLevelSelect(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataAdderLevelSelect*)
-   {
-      ::LiveDataAdderLevelSelect *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataAdderLevelSelect >(0);
-      static ::ROOT::TGenericClassInfo 
-         instance("LiveDataAdderLevelSelect", ::LiveDataAdderLevelSelect::Class_Version(), "james_nuclear_data_gui.h", 120,
-                  typeid(::LiveDataAdderLevelSelect), DefineBehavior(ptr, ptr),
-                  &::LiveDataAdderLevelSelect::Dictionary, isa_proxy, 4,
-                  sizeof(::LiveDataAdderLevelSelect) );
-      instance.SetNew(&new_LiveDataAdderLevelSelect);
-      instance.SetNewArray(&newArray_LiveDataAdderLevelSelect);
-      instance.SetDelete(&delete_LiveDataAdderLevelSelect);
-      instance.SetDeleteArray(&deleteArray_LiveDataAdderLevelSelect);
-      instance.SetDestructor(&destruct_LiveDataAdderLevelSelect);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::LiveDataAdderLevelSelect*)
-   {
-      return GenerateInitInstanceLocal((::LiveDataAdderLevelSelect*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataAdderLevelSelect*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-} // end of namespace ROOT
-
-namespace ROOT {
-   static TClass *PadScanData_Dictionary();
-   static void PadScanData_TClassManip(TClass*);
-   static void *new_PadScanData(void *p = 0);
-   static void *newArray_PadScanData(Long_t size, void *p);
-   static void delete_PadScanData(void *p);
-   static void deleteArray_PadScanData(void *p);
-   static void destruct_PadScanData(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::PadScanData*)
-   {
-      ::PadScanData *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::PadScanData));
-      static ::ROOT::TGenericClassInfo 
-         instance("PadScanData", "james_nuclear_data_gui.h", 139,
-                  typeid(::PadScanData), DefineBehavior(ptr, ptr),
-                  &PadScanData_Dictionary, isa_proxy, 4,
-                  sizeof(::PadScanData) );
-      instance.SetNew(&new_PadScanData);
-      instance.SetNewArray(&newArray_PadScanData);
-      instance.SetDelete(&delete_PadScanData);
-      instance.SetDeleteArray(&deleteArray_PadScanData);
-      instance.SetDestructor(&destruct_PadScanData);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::PadScanData*)
-   {
-      return GenerateInitInstanceLocal((::PadScanData*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::PadScanData*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-
-   // Dictionary for non-ClassDef classes
-   static TClass *PadScanData_Dictionary() {
-      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const ::PadScanData*)0x0)->GetClass();
-      PadScanData_TClassManip(theClass);
-   return theClass;
-   }
-
-   static void PadScanData_TClassManip(TClass* theClass){
-      theClass->CreateAttributeMap();
-      TDictAttributeMap* attrMap( theClass->GetAttributeMap() );
-      attrMap->AddProperty("file_name","include/james_nuclear_data_gui.h");
-   }
-
-} // end of namespace ROOT
-
-namespace ROOT {
-   static void *new_LiveDataGUIentry(void *p = 0);
-   static void *newArray_LiveDataGUIentry(Long_t size, void *p);
-   static void delete_LiveDataGUIentry(void *p);
-   static void deleteArray_LiveDataGUIentry(void *p);
-   static void destruct_LiveDataGUIentry(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataGUIentry*)
-   {
-      ::LiveDataGUIentry *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataGUIentry >(0);
-      static ::ROOT::TGenericClassInfo 
-         instance("LiveDataGUIentry", ::LiveDataGUIentry::Class_Version(), "james_nuclear_data_gui.h", 184,
-                  typeid(::LiveDataGUIentry), DefineBehavior(ptr, ptr),
-                  &::LiveDataGUIentry::Dictionary, isa_proxy, 4,
-                  sizeof(::LiveDataGUIentry) );
-      instance.SetNew(&new_LiveDataGUIentry);
-      instance.SetNewArray(&newArray_LiveDataGUIentry);
-      instance.SetDelete(&delete_LiveDataGUIentry);
-      instance.SetDeleteArray(&deleteArray_LiveDataGUIentry);
-      instance.SetDestructor(&destruct_LiveDataGUIentry);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::LiveDataGUIentry*)
-   {
-      return GenerateInitInstanceLocal((::LiveDataGUIentry*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataGUIentry*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-} // end of namespace ROOT
-
-namespace ROOT {
-   static void *new_LiveDataGUIStyleControl(void *p = 0);
-   static void *newArray_LiveDataGUIStyleControl(Long_t size, void *p);
-   static void delete_LiveDataGUIStyleControl(void *p);
-   static void deleteArray_LiveDataGUIStyleControl(void *p);
-   static void destruct_LiveDataGUIStyleControl(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataGUIStyleControl*)
-   {
-      ::LiveDataGUIStyleControl *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataGUIStyleControl >(0);
-      static ::ROOT::TGenericClassInfo 
-         instance("LiveDataGUIStyleControl", ::LiveDataGUIStyleControl::Class_Version(), "james_nuclear_data_gui.h", 204,
-                  typeid(::LiveDataGUIStyleControl), DefineBehavior(ptr, ptr),
-                  &::LiveDataGUIStyleControl::Dictionary, isa_proxy, 4,
-                  sizeof(::LiveDataGUIStyleControl) );
-      instance.SetNew(&new_LiveDataGUIStyleControl);
-      instance.SetNewArray(&newArray_LiveDataGUIStyleControl);
-      instance.SetDelete(&delete_LiveDataGUIStyleControl);
-      instance.SetDeleteArray(&deleteArray_LiveDataGUIStyleControl);
-      instance.SetDestructor(&destruct_LiveDataGUIStyleControl);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::LiveDataGUIStyleControl*)
-   {
-      return GenerateInitInstanceLocal((::LiveDataGUIStyleControl*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataGUIStyleControl*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-} // end of namespace ROOT
-
-namespace ROOT {
-   static void *new_LiveDataAdjuster(void *p = 0);
-   static void *newArray_LiveDataAdjuster(Long_t size, void *p);
-   static void delete_LiveDataAdjuster(void *p);
-   static void deleteArray_LiveDataAdjuster(void *p);
-   static void destruct_LiveDataAdjuster(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataAdjuster*)
-   {
-      ::LiveDataAdjuster *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataAdjuster >(0);
-      static ::ROOT::TGenericClassInfo 
-         instance("LiveDataAdjuster", ::LiveDataAdjuster::Class_Version(), "james_nuclear_data_gui.h", 220,
-                  typeid(::LiveDataAdjuster), DefineBehavior(ptr, ptr),
-                  &::LiveDataAdjuster::Dictionary, isa_proxy, 4,
-                  sizeof(::LiveDataAdjuster) );
-      instance.SetNew(&new_LiveDataAdjuster);
-      instance.SetNewArray(&newArray_LiveDataAdjuster);
-      instance.SetDelete(&delete_LiveDataAdjuster);
-      instance.SetDeleteArray(&deleteArray_LiveDataAdjuster);
-      instance.SetDestructor(&destruct_LiveDataAdjuster);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::LiveDataAdjuster*)
-   {
-      return GenerateInitInstanceLocal((::LiveDataAdjuster*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataAdjuster*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-} // end of namespace ROOT
-
-namespace ROOT {
    static TClass *nuclear_data_ob_Dictionary();
    static void nuclear_data_ob_TClassManip(TClass*);
    static void *new_nuclear_data_ob(void *p = 0);
@@ -398,7 +206,7 @@ namespace ROOT {
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::nuclear_data_ob));
       static ::ROOT::TGenericClassInfo 
          instance("nuclear_data_ob", "james_nuclear_data_ob.h", 78,
-                  typeid(::nuclear_data_ob), DefineBehavior(ptr, ptr),
+                  typeid(::nuclear_data_ob), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &nuclear_data_ob_Dictionary, isa_proxy, 4,
                   sizeof(::nuclear_data_ob) );
       instance.SetNew(&new_nuclear_data_ob);
@@ -446,7 +254,7 @@ namespace ROOT {
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::cNucleusIterator));
       static ::ROOT::TGenericClassInfo 
          instance("cNucleusIterator", "james_nuclear_data_ob.h", 300,
-                  typeid(::cNucleusIterator), DefineBehavior(ptr, ptr),
+                  typeid(::cNucleusIterator), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &cNucleusIterator_Dictionary, isa_proxy, 4,
                   sizeof(::cNucleusIterator) );
       instance.SetNew(&new_cNucleusIterator);
@@ -479,51 +287,243 @@ namespace ROOT {
 } // end of namespace ROOT
 
 namespace ROOT {
-   static TClass *cNucleus_Dictionary();
-   static void cNucleus_TClassManip(TClass*);
-   static void *new_cNucleus(void *p = 0);
-   static void *newArray_cNucleus(Long_t size, void *p);
-   static void delete_cNucleus(void *p);
-   static void deleteArray_cNucleus(void *p);
-   static void destruct_cNucleus(void *p);
+   static void *new_LiveDataSlicer(void *p = 0);
+   static void *newArray_LiveDataSlicer(Long_t size, void *p);
+   static void delete_LiveDataSlicer(void *p);
+   static void deleteArray_LiveDataSlicer(void *p);
+   static void destruct_LiveDataSlicer(void *p);
 
    // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::cNucleus*)
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataSlicer*)
    {
-      ::cNucleus *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::cNucleus));
+      ::LiveDataSlicer *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataSlicer >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("cNucleus", "LeeNucleus.h", 24,
-                  typeid(::cNucleus), DefineBehavior(ptr, ptr),
-                  &cNucleus_Dictionary, isa_proxy, 4,
-                  sizeof(::cNucleus) );
-      instance.SetNew(&new_cNucleus);
-      instance.SetNewArray(&newArray_cNucleus);
-      instance.SetDelete(&delete_cNucleus);
-      instance.SetDeleteArray(&deleteArray_cNucleus);
-      instance.SetDestructor(&destruct_cNucleus);
+         instance("LiveDataSlicer", ::LiveDataSlicer::Class_Version(), "james_nuclear_data_gui.h", 58,
+                  typeid(::LiveDataSlicer), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::LiveDataSlicer::Dictionary, isa_proxy, 4,
+                  sizeof(::LiveDataSlicer) );
+      instance.SetNew(&new_LiveDataSlicer);
+      instance.SetNewArray(&newArray_LiveDataSlicer);
+      instance.SetDelete(&delete_LiveDataSlicer);
+      instance.SetDeleteArray(&deleteArray_LiveDataSlicer);
+      instance.SetDestructor(&destruct_LiveDataSlicer);
       return &instance;
    }
-   TGenericClassInfo *GenerateInitInstance(const ::cNucleus*)
+   TGenericClassInfo *GenerateInitInstance(const ::LiveDataSlicer*)
    {
-      return GenerateInitInstanceLocal((::cNucleus*)0);
+      return GenerateInitInstanceLocal((::LiveDataSlicer*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::cNucleus*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataSlicer*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_LiveDataAdder(void *p = 0);
+   static void *newArray_LiveDataAdder(Long_t size, void *p);
+   static void delete_LiveDataAdder(void *p);
+   static void deleteArray_LiveDataAdder(void *p);
+   static void destruct_LiveDataAdder(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataAdder*)
+   {
+      ::LiveDataAdder *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataAdder >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("LiveDataAdder", ::LiveDataAdder::Class_Version(), "james_nuclear_data_gui.h", 94,
+                  typeid(::LiveDataAdder), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::LiveDataAdder::Dictionary, isa_proxy, 4,
+                  sizeof(::LiveDataAdder) );
+      instance.SetNew(&new_LiveDataAdder);
+      instance.SetNewArray(&newArray_LiveDataAdder);
+      instance.SetDelete(&delete_LiveDataAdder);
+      instance.SetDeleteArray(&deleteArray_LiveDataAdder);
+      instance.SetDestructor(&destruct_LiveDataAdder);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::LiveDataAdder*)
+   {
+      return GenerateInitInstanceLocal((::LiveDataAdder*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataAdder*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_LiveDataAdderLevelSelect(void *p = 0);
+   static void *newArray_LiveDataAdderLevelSelect(Long_t size, void *p);
+   static void delete_LiveDataAdderLevelSelect(void *p);
+   static void deleteArray_LiveDataAdderLevelSelect(void *p);
+   static void destruct_LiveDataAdderLevelSelect(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataAdderLevelSelect*)
+   {
+      ::LiveDataAdderLevelSelect *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataAdderLevelSelect >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("LiveDataAdderLevelSelect", ::LiveDataAdderLevelSelect::Class_Version(), "james_nuclear_data_gui.h", 120,
+                  typeid(::LiveDataAdderLevelSelect), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::LiveDataAdderLevelSelect::Dictionary, isa_proxy, 4,
+                  sizeof(::LiveDataAdderLevelSelect) );
+      instance.SetNew(&new_LiveDataAdderLevelSelect);
+      instance.SetNewArray(&newArray_LiveDataAdderLevelSelect);
+      instance.SetDelete(&delete_LiveDataAdderLevelSelect);
+      instance.SetDeleteArray(&deleteArray_LiveDataAdderLevelSelect);
+      instance.SetDestructor(&destruct_LiveDataAdderLevelSelect);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::LiveDataAdderLevelSelect*)
+   {
+      return GenerateInitInstanceLocal((::LiveDataAdderLevelSelect*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataAdderLevelSelect*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static TClass *PadScanData_Dictionary();
+   static void PadScanData_TClassManip(TClass*);
+   static void *new_PadScanData(void *p = 0);
+   static void *newArray_PadScanData(Long_t size, void *p);
+   static void delete_PadScanData(void *p);
+   static void deleteArray_PadScanData(void *p);
+   static void destruct_PadScanData(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::PadScanData*)
+   {
+      ::PadScanData *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::PadScanData));
+      static ::ROOT::TGenericClassInfo 
+         instance("PadScanData", "james_nuclear_data_gui.h", 139,
+                  typeid(::PadScanData), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &PadScanData_Dictionary, isa_proxy, 4,
+                  sizeof(::PadScanData) );
+      instance.SetNew(&new_PadScanData);
+      instance.SetNewArray(&newArray_PadScanData);
+      instance.SetDelete(&delete_PadScanData);
+      instance.SetDeleteArray(&deleteArray_PadScanData);
+      instance.SetDestructor(&destruct_PadScanData);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::PadScanData*)
+   {
+      return GenerateInitInstanceLocal((::PadScanData*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::PadScanData*)0x0); R__UseDummy(_R__UNIQUE_(Init));
 
    // Dictionary for non-ClassDef classes
-   static TClass *cNucleus_Dictionary() {
-      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const ::cNucleus*)0x0)->GetClass();
-      cNucleus_TClassManip(theClass);
+   static TClass *PadScanData_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const ::PadScanData*)0x0)->GetClass();
+      PadScanData_TClassManip(theClass);
    return theClass;
    }
 
-   static void cNucleus_TClassManip(TClass* theClass){
+   static void PadScanData_TClassManip(TClass* theClass){
       theClass->CreateAttributeMap();
       TDictAttributeMap* attrMap( theClass->GetAttributeMap() );
-      attrMap->AddProperty("file_name","include/LeeNucleus.h");
+      attrMap->AddProperty("file_name","include/james_nuclear_data_gui.h");
    }
 
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_LiveDataGUIentry(void *p = 0);
+   static void *newArray_LiveDataGUIentry(Long_t size, void *p);
+   static void delete_LiveDataGUIentry(void *p);
+   static void deleteArray_LiveDataGUIentry(void *p);
+   static void destruct_LiveDataGUIentry(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataGUIentry*)
+   {
+      ::LiveDataGUIentry *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataGUIentry >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("LiveDataGUIentry", ::LiveDataGUIentry::Class_Version(), "james_nuclear_data_gui.h", 184,
+                  typeid(::LiveDataGUIentry), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::LiveDataGUIentry::Dictionary, isa_proxy, 4,
+                  sizeof(::LiveDataGUIentry) );
+      instance.SetNew(&new_LiveDataGUIentry);
+      instance.SetNewArray(&newArray_LiveDataGUIentry);
+      instance.SetDelete(&delete_LiveDataGUIentry);
+      instance.SetDeleteArray(&deleteArray_LiveDataGUIentry);
+      instance.SetDestructor(&destruct_LiveDataGUIentry);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::LiveDataGUIentry*)
+   {
+      return GenerateInitInstanceLocal((::LiveDataGUIentry*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataGUIentry*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_LiveDataGUIStyleControl(void *p = 0);
+   static void *newArray_LiveDataGUIStyleControl(Long_t size, void *p);
+   static void delete_LiveDataGUIStyleControl(void *p);
+   static void deleteArray_LiveDataGUIStyleControl(void *p);
+   static void destruct_LiveDataGUIStyleControl(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataGUIStyleControl*)
+   {
+      ::LiveDataGUIStyleControl *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataGUIStyleControl >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("LiveDataGUIStyleControl", ::LiveDataGUIStyleControl::Class_Version(), "james_nuclear_data_gui.h", 204,
+                  typeid(::LiveDataGUIStyleControl), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::LiveDataGUIStyleControl::Dictionary, isa_proxy, 4,
+                  sizeof(::LiveDataGUIStyleControl) );
+      instance.SetNew(&new_LiveDataGUIStyleControl);
+      instance.SetNewArray(&newArray_LiveDataGUIStyleControl);
+      instance.SetDelete(&delete_LiveDataGUIStyleControl);
+      instance.SetDeleteArray(&deleteArray_LiveDataGUIStyleControl);
+      instance.SetDestructor(&destruct_LiveDataGUIStyleControl);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::LiveDataGUIStyleControl*)
+   {
+      return GenerateInitInstanceLocal((::LiveDataGUIStyleControl*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataGUIStyleControl*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_LiveDataAdjuster(void *p = 0);
+   static void *newArray_LiveDataAdjuster(Long_t size, void *p);
+   static void delete_LiveDataAdjuster(void *p);
+   static void deleteArray_LiveDataAdjuster(void *p);
+   static void destruct_LiveDataAdjuster(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::LiveDataAdjuster*)
+   {
+      ::LiveDataAdjuster *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::LiveDataAdjuster >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("LiveDataAdjuster", ::LiveDataAdjuster::Class_Version(), "james_nuclear_data_gui.h", 220,
+                  typeid(::LiveDataAdjuster), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::LiveDataAdjuster::Dictionary, isa_proxy, 4,
+                  sizeof(::LiveDataAdjuster) );
+      instance.SetNew(&new_LiveDataAdjuster);
+      instance.SetNewArray(&newArray_LiveDataAdjuster);
+      instance.SetDelete(&delete_LiveDataAdjuster);
+      instance.SetDeleteArray(&deleteArray_LiveDataAdjuster);
+      instance.SetDestructor(&destruct_LiveDataAdjuster);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::LiveDataAdjuster*)
+   {
+      return GenerateInitInstanceLocal((::LiveDataAdjuster*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::LiveDataAdjuster*)0x0); R__UseDummy(_R__UNIQUE_(Init));
 } // end of namespace ROOT
 
 //______________________________________________________________________________
@@ -738,6 +738,27 @@ TClass *LiveDataAdjuster::Class()
 
 namespace ROOT {
    // Wrappers around operator new
+   static void *new_cNucleus(void *p) {
+      return  p ? new(p) ::cNucleus : new ::cNucleus;
+   }
+   static void *newArray_cNucleus(Long_t nElements, void *p) {
+      return p ? new(p) ::cNucleus[nElements] : new ::cNucleus[nElements];
+   }
+   // Wrapper around operator delete
+   static void delete_cNucleus(void *p) {
+      delete ((::cNucleus*)p);
+   }
+   static void deleteArray_cNucleus(void *p) {
+      delete [] ((::cNucleus*)p);
+   }
+   static void destruct_cNucleus(void *p) {
+      typedef ::cNucleus current_t;
+      ((current_t*)p)->~current_t();
+   }
+} // end of namespace ROOT for class ::cNucleus
+
+namespace ROOT {
+   // Wrappers around operator new
    static void *new_cNucleusInh(void *p) {
       return  p ? new(p) ::cNucleusInh : new ::cNucleusInh;
    }
@@ -777,6 +798,48 @@ namespace ROOT {
       ((current_t*)p)->~current_t();
    }
 } // end of namespace ROOT for class ::NucDatumSpecifier
+
+namespace ROOT {
+   // Wrappers around operator new
+   static void *new_nuclear_data_ob(void *p) {
+      return  p ? new(p) ::nuclear_data_ob : new ::nuclear_data_ob;
+   }
+   static void *newArray_nuclear_data_ob(Long_t nElements, void *p) {
+      return p ? new(p) ::nuclear_data_ob[nElements] : new ::nuclear_data_ob[nElements];
+   }
+   // Wrapper around operator delete
+   static void delete_nuclear_data_ob(void *p) {
+      delete ((::nuclear_data_ob*)p);
+   }
+   static void deleteArray_nuclear_data_ob(void *p) {
+      delete [] ((::nuclear_data_ob*)p);
+   }
+   static void destruct_nuclear_data_ob(void *p) {
+      typedef ::nuclear_data_ob current_t;
+      ((current_t*)p)->~current_t();
+   }
+} // end of namespace ROOT for class ::nuclear_data_ob
+
+namespace ROOT {
+   // Wrappers around operator new
+   static void *new_cNucleusIterator(void *p) {
+      return  p ? new(p) ::cNucleusIterator : new ::cNucleusIterator;
+   }
+   static void *newArray_cNucleusIterator(Long_t nElements, void *p) {
+      return p ? new(p) ::cNucleusIterator[nElements] : new ::cNucleusIterator[nElements];
+   }
+   // Wrapper around operator delete
+   static void delete_cNucleusIterator(void *p) {
+      delete ((::cNucleusIterator*)p);
+   }
+   static void deleteArray_cNucleusIterator(void *p) {
+      delete [] ((::cNucleusIterator*)p);
+   }
+   static void destruct_cNucleusIterator(void *p) {
+      typedef ::cNucleusIterator current_t;
+      ((current_t*)p)->~current_t();
+   }
+} // end of namespace ROOT for class ::cNucleusIterator
 
 //______________________________________________________________________________
 void LiveDataSlicer::Streamer(TBuffer &R__b)
@@ -998,69 +1061,6 @@ namespace ROOT {
 } // end of namespace ROOT for class ::LiveDataAdjuster
 
 namespace ROOT {
-   // Wrappers around operator new
-   static void *new_nuclear_data_ob(void *p) {
-      return  p ? new(p) ::nuclear_data_ob : new ::nuclear_data_ob;
-   }
-   static void *newArray_nuclear_data_ob(Long_t nElements, void *p) {
-      return p ? new(p) ::nuclear_data_ob[nElements] : new ::nuclear_data_ob[nElements];
-   }
-   // Wrapper around operator delete
-   static void delete_nuclear_data_ob(void *p) {
-      delete ((::nuclear_data_ob*)p);
-   }
-   static void deleteArray_nuclear_data_ob(void *p) {
-      delete [] ((::nuclear_data_ob*)p);
-   }
-   static void destruct_nuclear_data_ob(void *p) {
-      typedef ::nuclear_data_ob current_t;
-      ((current_t*)p)->~current_t();
-   }
-} // end of namespace ROOT for class ::nuclear_data_ob
-
-namespace ROOT {
-   // Wrappers around operator new
-   static void *new_cNucleusIterator(void *p) {
-      return  p ? new(p) ::cNucleusIterator : new ::cNucleusIterator;
-   }
-   static void *newArray_cNucleusIterator(Long_t nElements, void *p) {
-      return p ? new(p) ::cNucleusIterator[nElements] : new ::cNucleusIterator[nElements];
-   }
-   // Wrapper around operator delete
-   static void delete_cNucleusIterator(void *p) {
-      delete ((::cNucleusIterator*)p);
-   }
-   static void deleteArray_cNucleusIterator(void *p) {
-      delete [] ((::cNucleusIterator*)p);
-   }
-   static void destruct_cNucleusIterator(void *p) {
-      typedef ::cNucleusIterator current_t;
-      ((current_t*)p)->~current_t();
-   }
-} // end of namespace ROOT for class ::cNucleusIterator
-
-namespace ROOT {
-   // Wrappers around operator new
-   static void *new_cNucleus(void *p) {
-      return  p ? new(p) ::cNucleus : new ::cNucleus;
-   }
-   static void *newArray_cNucleus(Long_t nElements, void *p) {
-      return p ? new(p) ::cNucleus[nElements] : new ::cNucleus[nElements];
-   }
-   // Wrapper around operator delete
-   static void delete_cNucleus(void *p) {
-      delete ((::cNucleus*)p);
-   }
-   static void deleteArray_cNucleus(void *p) {
-      delete [] ((::cNucleus*)p);
-   }
-   static void destruct_cNucleus(void *p) {
-      typedef ::cNucleus current_t;
-      ((current_t*)p)->~current_t();
-   }
-} // end of namespace ROOT for class ::cNucleus
-
-namespace ROOT {
    static TClass *vectorlEvectorlEdoublegRsPgR_Dictionary();
    static void vectorlEvectorlEdoublegRsPgR_TClassManip(TClass*);
    static void *new_vectorlEvectorlEdoublegRsPgR(void *p = 0);
@@ -1076,7 +1076,7 @@ namespace ROOT {
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<vector<double> >));
       static ::ROOT::TGenericClassInfo 
          instance("vector<vector<double> >", -2, "vector", 210,
-                  typeid(vector<vector<double> >), DefineBehavior(ptr, ptr),
+                  typeid(vector<vector<double> >), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlEvectorlEdoublegRsPgR_Dictionary, isa_proxy, 0,
                   sizeof(vector<vector<double> >) );
       instance.SetNew(&new_vectorlEvectorlEdoublegRsPgR);
@@ -1105,10 +1105,10 @@ namespace ROOT {
 namespace ROOT {
    // Wrappers around operator new
    static void *new_vectorlEvectorlEdoublegRsPgR(void *p) {
-      return  p ? ::new((::ROOT::TOperatorNewHelper*)p) vector<vector<double> > : new vector<vector<double> >;
+      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<vector<double> > : new vector<vector<double> >;
    }
    static void *newArray_vectorlEvectorlEdoublegRsPgR(Long_t nElements, void *p) {
-      return p ? ::new((::ROOT::TOperatorNewHelper*)p) vector<vector<double> >[nElements] : new vector<vector<double> >[nElements];
+      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<vector<double> >[nElements] : new vector<vector<double> >[nElements];
    }
    // Wrapper around operator delete
    static void delete_vectorlEvectorlEdoublegRsPgR(void *p) {
@@ -1139,7 +1139,7 @@ namespace ROOT {
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<double>));
       static ::ROOT::TGenericClassInfo 
          instance("vector<double>", -2, "vector", 210,
-                  typeid(vector<double>), DefineBehavior(ptr, ptr),
+                  typeid(vector<double>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlEdoublegR_Dictionary, isa_proxy, 0,
                   sizeof(vector<double>) );
       instance.SetNew(&new_vectorlEdoublegR);
@@ -1168,10 +1168,10 @@ namespace ROOT {
 namespace ROOT {
    // Wrappers around operator new
    static void *new_vectorlEdoublegR(void *p) {
-      return  p ? ::new((::ROOT::TOperatorNewHelper*)p) vector<double> : new vector<double>;
+      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<double> : new vector<double>;
    }
    static void *newArray_vectorlEdoublegR(Long_t nElements, void *p) {
-      return p ? ::new((::ROOT::TOperatorNewHelper*)p) vector<double>[nElements] : new vector<double>[nElements];
+      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<double>[nElements] : new vector<double>[nElements];
    }
    // Wrapper around operator delete
    static void delete_vectorlEdoublegR(void *p) {
@@ -1202,7 +1202,7 @@ namespace ROOT {
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<LiveDataGUIentry*>));
       static ::ROOT::TGenericClassInfo 
          instance("vector<LiveDataGUIentry*>", -2, "vector", 210,
-                  typeid(vector<LiveDataGUIentry*>), DefineBehavior(ptr, ptr),
+                  typeid(vector<LiveDataGUIentry*>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlELiveDataGUIentrymUgR_Dictionary, isa_proxy, 0,
                   sizeof(vector<LiveDataGUIentry*>) );
       instance.SetNew(&new_vectorlELiveDataGUIentrymUgR);
@@ -1231,10 +1231,10 @@ namespace ROOT {
 namespace ROOT {
    // Wrappers around operator new
    static void *new_vectorlELiveDataGUIentrymUgR(void *p) {
-      return  p ? ::new((::ROOT::TOperatorNewHelper*)p) vector<LiveDataGUIentry*> : new vector<LiveDataGUIentry*>;
+      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<LiveDataGUIentry*> : new vector<LiveDataGUIentry*>;
    }
    static void *newArray_vectorlELiveDataGUIentrymUgR(Long_t nElements, void *p) {
-      return p ? ::new((::ROOT::TOperatorNewHelper*)p) vector<LiveDataGUIentry*>[nElements] : new vector<LiveDataGUIentry*>[nElements];
+      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<LiveDataGUIentry*>[nElements] : new vector<LiveDataGUIentry*>[nElements];
    }
    // Wrapper around operator delete
    static void delete_vectorlELiveDataGUIentrymUgR(void *p) {
@@ -1252,27 +1252,31 @@ namespace ROOT {
 namespace {
   void TriggerDictionaryInitialization_DictOutputEx_Impl() {
     static const char* headers[] = {
-"include/james_LeeNucleusExtend.h",
 "include/james_nuclear_data_gui.h",
-"include/james_nuclear_data_ob.h",
-"include/james_root_maths.h",
+"include/james_gammarays.h",
+"include/james_LeeNucleusExtend.h",
 "include/james_physics.h",
+"include/james_root_maths.h",
+"include/james_nuclear_data_ob.h",
 0
     };
     static const char* includePaths[] = {
 "/home/jsmallcombe/Dropbox/codes/JPhysics/include",
-"/opt/root_v6.04.12/include/root",
+"/opt/root_v6.08.02/include",
 "/home/jsmallcombe/Dropbox/codes/JPhysics/",
 0
     };
-    static const char* fwdDeclCode = 
-R"DICTFWDDCLS(
+    static const char* fwdDeclCode = R"DICTFWDDCLS(
+#line 1 "DictOutputEx dictionary forward declarations' payload"
 #pragma clang diagnostic ignored "-Wkeyword-compat"
 #pragma clang diagnostic ignored "-Wignored-attributes"
 #pragma clang diagnostic ignored "-Wreturn-type-c-linkage"
 extern int __Cling_Autoloading_Map;
-class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_LeeNucleusExtend.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_LeeNucleusExtend.h")))  cNucleusInh;
-class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_LeeNucleusExtend.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_LeeNucleusExtend.h")))  NucDatumSpecifier;
+class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/LeeNucleus.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$LeeNucleus.h")))  __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  cNucleus;
+class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_LeeNucleusExtend.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$james_LeeNucleusExtend.h")))  __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  cNucleusInh;
+class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_LeeNucleusExtend.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$james_LeeNucleusExtend.h")))  __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  NucDatumSpecifier;
+class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_ob.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$james_nuclear_data_ob.h")))  __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  nuclear_data_ob;
+class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_ob.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$james_nuclear_data_ob.h")))  __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  cNucleusIterator;
 class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_gui.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  LiveDataSlicer;
 class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_gui.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  LiveDataAdder;
 class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_gui.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  LiveDataAdderLevelSelect;
@@ -1280,32 +1284,37 @@ class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_
 class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_gui.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  LiveDataGUIentry;
 class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_gui.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  LiveDataGUIStyleControl;
 class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_gui.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  LiveDataAdjuster;
-class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_ob.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  nuclear_data_ob;
-class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/james_nuclear_data_ob.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_nuclear_data_gui.h")))  cNucleusIterator;
-class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/LeeNucleus.h)ATTRDUMP"))) __attribute__((annotate(R"ATTRDUMP(pattern@@@*)ATTRDUMP"))) __attribute__((annotate("$clingAutoload$include/james_LeeNucleusExtend.h")))  cNucleus;
 )DICTFWDDCLS";
     static const char* payloadCode = R"DICTPAYLOAD(
+#line 1 "DictOutputEx dictionary payload"
 
 #ifndef G__VECTOR_HAS_CLASS_ITERATOR
   #define G__VECTOR_HAS_CLASS_ITERATOR 1
 #endif
 
 #define _BACKWARD_BACKWARD_WARNING_H
-#include "include/james_LeeNucleusExtend.h"
 #include "include/james_nuclear_data_gui.h"
-#include "include/james_nuclear_data_ob.h"
-#include "include/james_root_maths.h"
+#include "include/james_gammarays.h"
+#include "include/james_LeeNucleusExtend.h"
 #include "include/james_physics.h"
+#include "include/james_root_maths.h"
+#include "include/james_nuclear_data_ob.h"
 
 #undef  _BACKWARD_BACKWARD_WARNING_H
 )DICTPAYLOAD";
     static const char* classesHeaders[]={
 "", payloadCode, "@",
 "Acos", payloadCode, "@",
+"ApplyGeEff", payloadCode, "@",
 "Asin", payloadCode, "@",
 "Atan", payloadCode, "@",
+"ComptonProb_Y", payloadCode, "@",
+"ComptonProb_dsig_dT", payloadCode, "@",
+"ComptonProb_e", payloadCode, "@",
 "DetectorCoMAngles", payloadCode, "@",
 "DetectorCoMAnglesElastic", payloadCode, "@",
+"GenGeResponse", payloadCode, "@",
+"GenGeResponseA", payloadCode, "@",
 "K_bind_aprox_keV", payloadCode, "@",
 "LiveDataAdder", payloadCode, "@",
 "LiveDataAdder::fgIsA", payloadCode, "@",
@@ -1319,6 +1328,7 @@ class __attribute__((annotate(R"ATTRDUMP(file_name@@@include/LeeNucleus.h)ATTRDU
 "LiveDataGUIentry::fgIsA", payloadCode, "@",
 "LiveDataSlicer", payloadCode, "@",
 "LiveDataSlicer::fgIsA", payloadCode, "@",
+"MyKeVNorm", payloadCode, "@",
 "NucDatumSpecifier", payloadCode, "@",
 "PadScanData", payloadCode, "@",
 "PadScanData::CurrentDraw", payloadCode, "@",

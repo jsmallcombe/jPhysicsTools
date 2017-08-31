@@ -6,6 +6,10 @@ double nuclear_data_ob::get_density_gcm3(int z){
 if(general_reader(z)) return density_gcm3[z];
 return 0;}
 
+double nuclear_data_ob::get_element_mass(int z){
+if(general_reader(z)) return element_mass[z];
+return 0;}
+
 double nuclear_data_ob::get_Kbinding(int z){
 if(general_reader(z)) return Kbinding[z];
 return 0;}

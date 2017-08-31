@@ -3,6 +3,8 @@ static double beta[128][256];
 static bool beta_set;
 static double density_gcm3[256];
 static bool density_gcm3_set;
+static double element_mass[256];
+static bool element_mass_set;
 static double Kbinding[256];
 static bool Kbinding_set;
 static double L0_2[128][256];
@@ -41,6 +43,9 @@ static double get_beta(int,int);
 
 //Returns density_gcm3 [Inputs(Z)]
 static double get_density_gcm3(int);
+
+//Returns element_mass [Inputs(Z)]
+static double get_element_mass(int);
 
 //Returns Kbinding [Inputs(Z)]
 static double get_Kbinding(int);

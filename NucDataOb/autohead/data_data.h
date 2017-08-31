@@ -1,5 +1,6 @@
 #include "NucDataOb/autohead/beta.h"
 #include "NucDataOb/autohead/density_gcm3.h"
+#include "NucDataOb/autohead/element_mass.h"
 #include "NucDataOb/autohead/Kbinding.h"
 #include "NucDataOb/autohead/L0_2.h"
 #include "NucDataOb/autohead/L0_3.h"
