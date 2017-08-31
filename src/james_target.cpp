@@ -282,7 +282,7 @@ StoppingRange* target::GetRangeDBack(int z,int a){
 	}
 	
 	if(targ_compound)rangelist_back.push_back(StoppingRange(z,a,bompZ,bompA,compR));
-	else rangelist_back.push_back(StoppingRange(z,a,targ_Z,targ_A));
+	else rangelist_back.push_back(StoppingRange(z,a,backing_Z,backing_A));
 	
 	return &rangelist_back[rangelist_back.size()-1];
 }
@@ -290,7 +290,7 @@ StoppingRange* target::GetRangeDBack(int z,int a){
 
 
 double target::GetRange(int z,int a,double MeV){
-	StoppingRange* ran =GetRangeDBack(z,a);
+	StoppingRange* ran =GetRangeD(z,a);
 	return ran->Range.Eval(MeV);
 }
 
@@ -300,7 +300,7 @@ double target::GetRangeBack(int z,int a,double MeV){
 }
 
 double target::GetEnergyTrav(int z,int a,double mg){
-	StoppingRange* ran =GetRangeDBack(z,a);
+	StoppingRange* ran =GetRangeD(z,a);
 	return ran->Energy.Eval(mg);
 }
 
@@ -347,12 +347,13 @@ void StoppingRange::Build(vector<int> &TargZ,vector<int> &TargA,vector<double> &
 	Energy.SetPoint(0,0,0);
 	
 	for(int i=7;i<61;i++){
+		
 		double Up=pow(10,-2+(0.1*i));
 		double MeV=(Up+Eprev)*0.5;
 		double de=dEdXComp(MeV,BeamZ,BeamA,TargZ,TargA,TargRatio);
 		double Erange=Up-Eprev;
 		double mgrange=Erange/de;
-		
+				
 		if(mgrange>0)
 			Trange+=mgrange;
 		else
@@ -363,6 +364,11 @@ void StoppingRange::Build(vector<int> &TargZ,vector<int> &TargA,vector<double> &
 		Energy.SetPoint(Energy.GetN(),Trange,Up);
 	}
 	
+// 	TVirtualPad* a=gPad;
+// 	TCanvas* C=new TCanvas("c1","c1");
+// 	C->cd();
+// 	Range.DrawClone("al");
+// 	a->cd();	
 }
 
 double StoppingRange::dEdXComp(double MeV, int zp, int ap, vector<int> &TargZ,vector<int> &TargA,vector<double> &TargRatio){// MeV/(mg/cm2)
@@ -423,6 +429,16 @@ int isw5 = 0;
   Compute 1/(dE/dx) for a given energy E/A and projectile and target.
 */
 double StoppingRange::dEdX(double MeV, int zp, int ap, int zt, int at) {
+	
+	////// NO IDEA WHAT THESE DO BUT NOT RESETING THEM CAUSED ISSUES /////
+	isw1 = 0;
+	isw2 = 0;
+	isw3 = 0;
+	isw4 = 0;
+	isw5 = 0;
+	///////
+	
+	
 	int icorr=1;
 	double e=MeV/ap;
 	double dedxn, dedxe;
