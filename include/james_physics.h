@@ -48,7 +48,7 @@ void alight_to_Z(TVector3,TVector3&);
 double classical_radius(double);
 
 // Returns coulomb barrier (MeV) [Inputs(A1,Z1,A2,Z2,gap[fm])]
-double classical_barrier(double,double,double,double,double=0);	
+double classical_barrier(double A1,double Z1,double A2,double Z2,double fm=0);	
 
 // Returns colulex safe distance of closest approach in fm [Inputs(A1,A2,switch)]
 double safe_r(double,double,int=0);	
