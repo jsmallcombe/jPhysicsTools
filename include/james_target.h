@@ -243,14 +243,17 @@ class target
 	
 	/////// FISSION STUFF  ////////////
 	
+	TH2F eloss_frag_graph_targ; //fission fragment energy graphs
+	TH2F eloss_frag_graph_back;
+	
 // 	// Create a fission fragment energy lookup table in the target object
 // 	// Slow initial process, attempts to load and save a local file.
 // 	// [Inputs(Compound_Z, Compound_A)]	
-	void fragment_set(double,double);
+	void fragment_set(double Z,double A);
 // 	
 // 	// Lookup fission fragment energy loss if table has been generated
 // 	// [Inputs(Fragment_mass (amu), Fragment Energy (MeV), Trajctory)]		
-	double fragment_e_exit(double,double,TVector3,double=0.5){double a; return 2.0;}//Z,a,MeV,vector
+	double fragment_e_exit(double,double,TVector3,double=0.5);//Z,a,MeV,vector
 // 		
 
 };

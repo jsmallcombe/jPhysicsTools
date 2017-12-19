@@ -54,11 +54,11 @@ double giveme_areal(double p,double t,bool print){
 //////////////////////////////////////////////////
 
 
-target::target(int targZ, int targA, double targmgcm, TVector3 targnorm, int targcomp, double backmgcm, int backZ, int backA, int backcomp):	targ_Z(targZ),targ_A(targA),target_thickness(targmgcm),targ_norm(targnorm),targ_fornmal(targnorm),targ_compound(0),backing_thickness(backmgcm),backing_Z(backZ),backing_A(backA),backing_compound(0),downstream_back(0){
+target::target(int targZ, int targA, double targmgcm, TVector3 targnorm, int targcomp, double backmgcm, int backZ, int backA, int backcomp):	targ_Z(targZ),targ_A(targA),target_thickness(targmgcm),targ_compound(0),backing_thickness(backmgcm),backing_Z(backZ),backing_A(backA),backing_compound(0),downstream_back(0),targ_norm(targnorm),targ_fornmal(targnorm){
 	
 // 	stringstream ss;rand.SetSeed();ss << rand.Rndm();randstr=ss.str();
-// 	eloss_frag_graph_targ=TH2D(("eloss_frag_graph_targ"+randstr).c_str(),"eloss_frag_graph_targ", 10000,0,1000,2000,0.05,200.05);
-// 	eloss_frag_graph_back=TH2D(("eloss_frag_graph_back"+randstr).c_str(),"eloss_frag_graph_back", 10000,0,1000,2000,0.05,200.05);
+// 	eloss_frag_graph_targ=TH2F(("eloss_frag_graph_targ"+randstr).c_str(),"eloss_frag_graph_targ", 10000,0,1000,2000,0.05,200.05);
+// 	eloss_frag_graph_back=TH2F(("eloss_frag_graph_back"+randstr).c_str(),"eloss_frag_graph_back", 10000,0,1000,2000,0.05,200.05);
 	
 	SetNormal();
 	
@@ -310,7 +310,149 @@ double target::GetEnergyTravBack(int z,int a,double mg){
 }
 
 
+/////// FISSION STUFF  ////////////
+	
 
+//Use TH2F not graph2D because interpolate on graph is too slow
+void target::fragment_set(double Z,double A){
+	stringstream ss;
+	ss << targ_Z << " " <<targ_A<<" "<<target_thickness;
+	string extrastr=ss.str();
+	
+	//If its already been made it'll be stored in the run directory
+	TFile* qfile = new TFile("eloss_store.root","READ");
+	if(qfile->IsOpen()){
+		TH2F * h2a;
+		h2a = (TH2F*)qfile->Get("eloss_frag_graph_targ");
+		this->eloss_frag_graph_targ= *h2a;
+		this->eloss_frag_graph_targ.SetName(("eloss_frag_graph_targ"+extrastr).c_str());
+		TH2F * h2b;
+		h2b = (TH2F*)qfile->Get("eloss_frag_graph_back");
+		this->eloss_frag_graph_back= *h2b;
+		this->eloss_frag_graph_back.SetName(("eloss_frag_graph_back"+extrastr).c_str());
+		cout<<endl<<endl<<"READ FRAGMENT E LOSS TO TARGET. DELETE eloss_store.root IF UNDESIRED."<<endl<<endl;
+		
+		qfile->Close();
+		delete qfile;
+		return;
+	}
+	
+	//otherwise create new ones
+	
+	eloss_frag_graph_targ=TH2F(("eloss_frag_graph_targ"+extrastr).c_str(),"eloss_frag_graph_targ", 10000,0,1000,2000,0.05,200.05);
+	eloss_frag_graph_back=TH2F(("eloss_frag_graph_back"+extrastr).c_str(),"eloss_frag_graph_back", 10000,0,1000,2000,0.05,200.05);
+	
+	double ratio=Z/A;
+	
+	//create the var hist
+	//82
+	//double xbins[]={0.05,0.15,0.25,0.35,0.45,0.55,0.65,0.75,0.85,0.95,1.25,1.75,2.25,2.75,3.25,3.75,4.25,4.75,5.25,6.5,7.5,8.5,9.5,10.5,11.5,12.5,13.5,14.5,15.5,16.7,17.5,18.5,19.5,21,23,25,27,29,31,33,35,37,39,41,46,50,54,58,62,66,70,74,78,82,95,105,115,125,135,145,155,165,175,185,195,210,230,250,270,290,310,330,350,370,390,425,475,550,650,750,850,950,1050};
+	double xbins[347];
+	for(int z=0;z<=199;z++)xbins[z]=0.1*(double)z;
+	for(int z=0;z<=60;z++)xbins[z+200]=(0.5*(double)z)+20;
+	for(int z=0;z<=50;z++)xbins[z+260]=((double)z)+50;
+	for(int z=0;z<=40;z++)xbins[z+300]=(10*(double)z)+100;
+	for(int z=0;z<=5;z++)xbins[z+340]=(100*(double)z)+500;
+	xbins[346]=1001;
+	TH2F varhista("varhista","varhista", 346,xbins,200,0.5,200.5);	
+	TH2F varhistb("varhistb","varhistb", 346,xbins,200,0.5,200.5);
+	
+	//For targ material
+	//calc the z averages E loss	
+
+	for(int a=9;a<=200;a++){
+		double* tempd=new double(0);
+		double idealZ=(double)a*ratio;
+		int z=round(idealZ);
+		double weight_sum=0;
+		double ZZ[5];
+		for(int k=-2;k<=2;k++){
+			ZZ[k+2]=TMath::Gaus(z+k,idealZ);
+			weight_sum+=ZZ[k+2];
+		}
+		int f=0,l=4;
+		if(abs(idealZ-(double)z)>0.25){weight_sum-=ZZ[0];f=1;}
+		if(abs(idealZ-(double)z)<-0.25){weight_sum-=ZZ[4];l=3;}
+
+		for(int i=1;i<=346;i++){//346
+			double Emev=varhista.GetXaxis()->GetBinCenter(i);
+			double en=0;
+			for(int k=f;k<=l;k++){
+				en+=(Emev-pass(z+k-2,a,1.1*(target_thickness/1000),Emev))*ZZ[k];//*(3-abs(k));
+			}
+			en/=weight_sum;			
+			if(en>Emev)en=Emev;
+			if(en<0)en=0;
+			varhista.SetBinContent(i,a,en);
+		}	
+		delete tempd;
+		// 	was split into 2 loops because it was really slow otherwise for some reason
+		tempd=new double(0);
+		for(int i=1;i<=346;i++){//346
+			double Emev=varhistb.GetXaxis()->GetBinCenter(i);
+			double en=0;
+			for(int k=f;k<=l;k++){
+				en+=(Emev-passB(z+k-2,a,1.1*(backing_thickness/1000),Emev))*ZZ[k];//*(3-abs(k));
+			}
+			en/=weight_sum;			
+			if(en>Emev)en=Emev;
+			if(en<0)en=0;
+			varhistb.SetBinContent(i,a,en);	
+		}
+		delete tempd;	
+	}
+
+	//copy into a more fleshed out even histogram
+	for(int i=1;i<=10000;i++){
+		double Emev=(0.05+(0.1*i));
+		for(int j=90;j<=2000;j++){
+			double mass=(0.1+(0.1*j));
+			double ena=varhista.Interpolate(Emev,mass);
+			eloss_frag_graph_targ.SetBinContent(i,j,ena);			
+			double enb=varhistb.Interpolate(Emev,mass);
+			eloss_frag_graph_back.SetBinContent(i,j,enb);
+		}
+	}
+	
+	eloss_frag_graph_targ.Smooth();	
+	eloss_frag_graph_targ.Smooth();	
+	eloss_frag_graph_targ.Smooth();			
+				
+	eloss_frag_graph_back.Smooth();
+	eloss_frag_graph_back.Smooth();
+	eloss_frag_graph_back.Smooth();
+	
+	//write it for saves
+	TFile* rfile = new TFile("eloss_store.root","RECREATE");
+		eloss_frag_graph_targ.Write("eloss_frag_graph_targ");
+		eloss_frag_graph_back.Write("eloss_frag_graph_back");
+	rfile->Close();
+	delete rfile;
+}
+
+double target::fragment_e_exit(double mass,double energy,TVector3 traj,double fraction_in){
+	if(fraction_in<=0)fraction_in=0.5;
+	if(fraction_in!=0.5)if(abs(targ_fornmal.Angle(traj))<pi/2)fraction_in=1-fraction_in;//going out the front
+	
+	if(mass>=10&&mass<200&&energy>0&&energy<1000){
+		bool backing_traversed=false;
+		if(backing_thickness>0 && (abs(targ_norm.Angle(traj))>pi/2)){backing_traversed=true;}
+		
+		double ebeam_slow=energy;
+		double eff_thick=target_effective(traj,targ_norm,(1.0/1.1));
+		
+		ebeam_slow=ebeam_slow-(eloss_frag_graph_targ.Interpolate(ebeam_slow,mass)*eff_thick*fraction_in);
+		if(backing_traversed)ebeam_slow=ebeam_slow-(eloss_frag_graph_back.Interpolate(ebeam_slow,mass)*eff_thick);
+		
+		return ebeam_slow;	
+		
+// // // 		double* tempd=new double(0);
+// // // 		double pass=passage(0,mass*(40.0/90.0),mass,targ_compound,targ_Z,targ_A,energy,target_effective(traj,targ_norm,(target_thickness/1000)),tempd);
+// // // 		delete tempd;
+// // // 		return pass;
+	}
+	return 0;
+}
 
 
 
