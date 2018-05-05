@@ -81,10 +81,20 @@ void AddElectronLabel(double Ey,string Z,bool exact,bool M,string text,TVirtualP
 	latex->SetTextFont(22);
 	latex->SetTextAlign(11);
 	
-	text="K "+text;
-	latex->DrawLatex(x[1],y[1]+y5*0.1,text.c_str());
-	latex->DrawLatex(x[2],y[2]+y5*0.1,"L");
-	if(M)latex->DrawLatex(x[5],y[5]+y5*0.1,"M");
+	
+	//Slight x offset
+	double xo=0.015*(pad->GetUxmax()-pad->GetUxmin());
+	
+	latex->DrawLatex(x[1],y[1]+y5,"K");
+	latex->DrawLatex(x[2],y[2]+y5,"L");
+	if(M)latex->DrawLatex(x[5]+xo,y[5]+y5*0.3,"M");
+	
+	double xTt=(x[2]-x[1])*0.5;
+	double yTt=(y[2]-y[1])*0.5;
+	double XTt=x[1]+xTt-0.2*yTt;
+	double YTt=y[1]+yTt+0.2*xTt;
+	
+	latex->DrawLatex(XTt,YTt,text.c_str());
 }
 
 void AddElectronGammaLabels(TCanvas* bisected,double E,string Z,bool exact,string text,bool M){
@@ -98,3 +108,144 @@ void AddElectronGammaLabels(TCanvas* bisected,double UrangeL,double UrangeU,doub
 	AddPeakLabel(E,false,text,bisected->cd(2));
 	AddElectronLabel(E,Z,false,true,"",bisected->cd(1),0,bisected->cd(2));
 }
+
+
+///////////// Level Scheme and Drawing /////////////////
+
+
+void JamesLevelScheme::AddLevel(unsigned int band,double Energy,string Label,unsigned int col){
+	while(Energies.size()<=band){
+			Energies.push_back(std::vector< double >());
+			LevelColor.push_back(std::vector< unsigned int >());
+			Labels.push_back(std::vector< string >());
+	}
+	if(MinE<0||MinE>Energy)MinE=Energy;
+	if(MaxE<0||MaxE<Energy)MaxE=Energy;
+	
+	Energies[band].push_back(Energy);
+	LevelColor[band].push_back(col);
+	Labels[band].push_back(Label);
+}
+	
+	
+	
+void JamesLevelScheme::CalcVert(double Y0,double YRange){
+	VertScale=YRange/(MaxE-MinE);
+	VertOff=MinE -Y0/VertScale;
+}
+
+
+void JamesLevelScheme::DrawScheme(double X0,double Y0,double YRange){
+	gX0=X0;
+	gPad->Update();
+	CalcVert(Y0,YRange);
+	DrawLevels();
+	DrawTransitions();
+}
+
+void JamesLevelScheme::DrawLevels(){
+	gPad->Update();
+	for(unsigned int b=0;b<Energies.size();b++){
+		DrawBand(b);
+	}
+}
+
+void JamesLevelScheme::DrawTransitions(){
+	gPad->Update();
+	for(unsigned int t=0;t<Transitions.size();t++){
+		if(Transitions[t][0]<Energies.size()&&Transitions[t][2]<Energies.size()){
+			if(Transitions[t][1]<Energies[Transitions[t][0]].size()&&Transitions[t][3]<Energies[Transitions[t][2]].size()){
+				double E1=Energies[Transitions[t][0]][Transitions[t][1]];
+				double E2=Energies[Transitions[t][2]][Transitions[t][3]];
+				
+				double XT=BandX(Transitions[t][0]);
+
+				DrawVerticalArrowPad(XT,EY(E1),EY(E2),Transitions[t][4]);
+				
+				if(Transitions[t][0]!=Transitions[t][2]){
+					DrawInterBandExtension(Transitions[t][2],Transitions[t][3],Transitions[t][0]);
+				}
+			}
+		}
+	}
+}
+
+
+
+void JamesLevelScheme::DrawLevel(double Y,double X,string spinlab,double engy,unsigned int col){
+
+	TLine line;
+	line.SetLineWidth(LineWidth);
+	line.SetLineColor(col);
+	line.DrawLineNDC(X-StateWidth*0.5,Y,X+StateWidth*0.5,Y);
+
+	TLatex latex;
+	latex.SetTextSize(TextSize);
+	latex.SetTextColor(col);
+	latex.SetTextFont(22);
+	
+	latex.SetTextAlign(11);
+	latex.DrawLatexNDC(X-StateWidth*0.5,Y+LabelYOffset,spinlab.c_str());
+	
+	stringstream elab;
+	elab<<engy;
+	if(KeVLabel)elab<<" keV";
+	
+	latex.SetTextAlign(31);
+	latex.DrawLatexNDC(X+StateWidth*0.5,Y+LabelYOffset,elab.str().c_str());
+}
+
+void JamesLevelScheme::DrawVerticalArrowPad(double X1,double Y1,double Y2,unsigned int col){
+	double X2=X1;
+	gPad->Update();
+	PadNDCtoUser(X1,Y1,gPad);
+	PadNDCtoUser(X2,Y2,gPad);
+	TArrow arrow;
+	arrow.SetLineColor(col);
+	arrow.SetFillColor(col);
+	arrow.SetLineWidth(LineWidth);
+	arrow.DrawArrow(X1,Y1,X2,Y2,TextSize*0.3,"|>");
+}
+
+void JamesLevelScheme::DrawBand(unsigned int b){
+	if(b>=Energies.size())return;
+	double X=BandX(b);
+	vector< int > ordered=vector_order_gen(Energies[b],true);
+
+	double PrevY=0;
+	for(unsigned int i=0;i<Energies[b].size();i++){
+		double E=Energies[b][ordered[i]];
+		double Y=EY(E);
+		
+		DrawLevel(Y,X,Labels[b][ordered[i]],E,1);
+
+		if(i>0&&DefaultIntra){
+			DrawVerticalArrowPad(X,Y,PrevY,LevelColor[b][ordered[i]]);
+		}
+		PrevY=Y;
+	}
+	
+}
+
+
+void JamesLevelScheme::DrawInterBandExtension(unsigned int band1,unsigned int level1,unsigned int band2){
+	if(band1>=Energies.size())return;
+	if(level1>=Energies[band1].size())return;
+	if(band1==band2)return;
+	
+	
+	TLine line;
+	line.SetLineWidth(LineWidth);
+	line.SetLineColor(LevelColor[band1][level1]);
+	line.SetLineStyle(2);
+	
+	double X1=BandX(band1)+StateWidth*0.5;
+	if(band1>band2)X1-=StateWidth;
+	double X2=BandX(band2);
+	double Y=EY(Energies[band1][level1]);
+	
+	line.DrawLineNDC(X1,Y,X2,Y);
+	
+}
+
+

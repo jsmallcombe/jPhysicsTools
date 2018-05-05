@@ -304,3 +304,63 @@ void draw_sum_leg(int L_max){
 void legenedre_spherical_manual(){
 	//Do stuff
 }
+
+
+//Draw gamma ray distributions for mixed E2,M1
+void draw_E2M1(int ini,int fin,double delta=0.5,double sigma=0.01){
+
+	
+	if(abs(ini-fin)>1)return;
+	if(ini+fin<2)return;
+	
+	gamma_dist distA,distB;
+	distA.set_gamma_L(2);
+	distA.set_alignment(ini,sigma);
+	distB.set_gamma_L(1);
+	distB.set_alignment(ini,sigma);
+		
+	//Seems distribution from simplified_gamma_dist isnt normalised? ...
+	double sumA=0,sumB=0;
+	for(int i=0;i<1000;i++){
+		double theta=pi*(double)i/1000.0;
+		sumA+=distA.simplified_gamma_dist(fin,theta)*sin(theta);
+		sumB+=distB.simplified_gamma_dist(fin,theta)*sin(theta);
+	}	
+	
+	double M=1./(1+delta*delta);
+	double E=1-M;
+	
+	
+	TGraph bob,bill;
+	for(int i=1;i<1000;i++){
+		double theta=pi*(double)i/1000.0;
+		
+		double Edis=distA.simplified_gamma_dist(fin,theta);
+		double Mdis=distB.simplified_gamma_dist(fin,theta);
+		
+		double sumdist=(Edis*E/sumA)+(Mdis*M/sumB);
+		double ratio=sumdist/(Edis/sumA);
+		
+	
+		bob.SetPoint(bob.GetN(),theta,sumdist);
+		bill.SetPoint(bill.GetN(),theta,ratio);
+	}		
+	
+		stringstream ss;
+		ss<<ini<<"->"<<fin<<" #delta(E2/M1)="<<delta<<" #sigma_{m}="<<sigma;
+		bob.SetTitle(ss.str().c_str());
+		bill.SetTitle("W_{#gamma}(#delta)/W_{#gamma}(E2)");
+		
+		TCanvas* divplot=new TCanvas();
+		divplot->Divide(2);
+		divplot->cd(1);
+		gPad->Update();
+		bob.DrawClone("AL");
+		divplot->cd(2);
+		gPad->Update();
+		bill.SetMinimum(0);
+		bill.DrawClone("AL");
+
+// 	}
+}
+
