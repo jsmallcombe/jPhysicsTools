@@ -67,8 +67,9 @@ double angledifference_signed(double A,double B){ //Angles in Radians
 
 double happy_phi(double phi)
 {
-	phi+=pi/2;
+// 	phi+=pi/2;//I dont know why I did this for so long?!!!
 	while(phi<0)phi+=2*pi;
+	while(phi>2*pi)phi-=2*pi;
 	return phi;
 }
 
