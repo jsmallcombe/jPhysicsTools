@@ -223,6 +223,9 @@ class target
 	
 	//////  Functions in mg/cm2 ////// 
 	
+	//Return dedx in MeV/(mg/cm2) slow function, not for loops
+	double dedx(int z,int a,double MeV);
+	
 	//Return the energy of beam before target, given energy after
 	double egap(int z,int a,double mg,double MeV);
 	

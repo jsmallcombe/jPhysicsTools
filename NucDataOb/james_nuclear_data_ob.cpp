@@ -898,7 +898,7 @@ int nuclear_data_ob::LoadEnergyListFile(string filename){
 		}
 		return 1;
 	}
-	cout<<endl<<"File "<<infile<<" not found."<<endl;
+	cout<<endl<<"File "<<filename<<" not found."<<endl;
 	return 0;
 }
 

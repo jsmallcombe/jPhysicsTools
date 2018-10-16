@@ -9,7 +9,10 @@
 ROOT_LIBS = `root-config --glibs`
 ROOT_GCC_FLAGS = `root-config --cflags`
 
-EXTERNAL_LIBS = -lwignerSymbols -lgsl
+# EXTERNAL_LIBS = -lwignerSymbols -lgsl
+EXTERNAL_LIBS = -lwignerSymbols `pkg-config --cflags --libs gsl`
+
+
 
 JAMES_LIB = $(shell pwd)
 JAMES_INCLUDE = $(shell pwd)/include

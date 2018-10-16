@@ -237,6 +237,12 @@ double target::traverse(int z,int a,double mev_in,TVector3 traj,double startfr,d
 	return mev;	
 }
 
+double target::dedx(int z,int a,double MeV){
+	// MeV/(mg/cm2)
+	if(targ_compound)return StoppingRange::dEdXComp(MeV,z,a,compZ,compA,compR);
+	else return StoppingRange::dEdX(MeV,z,a,targ_Z,targ_A);
+	return 0;
+}
 
 double target::egap(int z,int a,double mg,double MeV){
 	StoppingRange* ran =GetRangeD(z,a);
