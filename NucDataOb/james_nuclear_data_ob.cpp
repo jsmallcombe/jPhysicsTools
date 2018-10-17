@@ -108,7 +108,7 @@ TH2F* nuclear_data_ob::lifetime_hist(){
 			if(t>1)t=log(t)+1;
 			if(t>2)t=log(t)+2-log(2);
 			if(t==0)t=-0.2;
-			lth->SetBinContent(n,z,t);
+			lth->SetBinContent(n+1,z+1,t);
 		}
 	}
 	chart_format(lth);
