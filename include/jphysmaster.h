@@ -1,4 +1,4 @@
-// James physics library master  16 Oct 2018
+// James physics library master  17 Apr 2019
 #include <james_fission.h>
 #include <james_gammarays.h>
 #include <james_LeeNucleusExtend.h>

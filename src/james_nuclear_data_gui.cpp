@@ -738,6 +738,17 @@ LiveDataAdjuster::LiveDataAdjuster() : TGMainFrame(gClient->GetRoot(), 100, 100,
 	fTeh1->SetText ("Sn",kFALSE);
 	fTeh1->Connect("ReturnPressed()", "LiveDataAdjuster", this,"ChangedSelection()");
 	fTeh1->Connect("TabPressed()", "LiveDataAdjuster", this,"ChangedSelection()");
+    
+    
+    TGLayoutHints* expy =new TGLayoutHints(kLHintsExpandY);
+	TGVerticalFrame* zbutf = new TGVerticalFrame(this, 0, 0, 0); 
+    TGPictureButton* fButtonUp = new TGPictureButton(zbutf, fClient->GetPicture("arrow_up.xpm"), 1);
+	fButtonUp->Connect("Clicked()", "LiveDataAdjuster", this, "ChangeZ(int=1)");
+    zbutf->AddFrame(fButtonUp,expy);
+    TGPictureButton* fButtonDown = new TGPictureButton(zbutf, fClient->GetPicture("arrow_down.xpm"), 2);
+    zbutf->AddFrame(fButtonDown, expy);
+	fButtonDown->Connect("Clicked()", "LiveDataAdjuster", this, "ChangeZ(int=0)");
+     
 	
 	mass = new TGNumberEntry(this,100, 3,-1,TGNumberFormat::kNESInteger,TGNumberFormat::kNEAPositive);
 	mass->Connect("ValueSet(Long_t))", "LiveDataAdjuster", this, "ChangedSelection()");
@@ -750,6 +761,7 @@ LiveDataAdjuster::LiveDataAdjuster() : TGMainFrame(gClient->GetRoot(), 100, 100,
 	this->AddFrame(index);
 	this->AddFrame(Tlabel);
 	this->AddFrame(fTeh1);
+	this->AddFrame(zbutf,expy);
 	this->AddFrame(mass);
 	this->AddFrame(value);
 	this->AddFrame(fTButton1);
@@ -765,6 +777,14 @@ void LiveDataAdjuster::ChangedIndex(){
 	ChangedSelection();
 	
 }
+
+void LiveDataAdjuster::ChangeZ(int up){
+    int Z=nuclear_data_ob::get_Z((string)fTeh1->GetText());
+    if(up)Z++;else Z--;
+	fTeh1->SetText (nuclear_data_ob::get_symb(Z).c_str(),kFALSE);
+    ChangedSelection();
+}
+
 void LiveDataAdjuster::ChangedSelection(){
 	double v=nuclear_data_ob::get_data_live(index->GetIntNumber(),nuclear_data_ob::get_Z((string)fTeh1->GetText()),mass->GetIntNumber());
 	value->SetNumber(v);

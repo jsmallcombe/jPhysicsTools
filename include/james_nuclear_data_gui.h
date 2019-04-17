@@ -231,7 +231,8 @@ public:
 	void ChangedIndex();	
 	void ChangedSelection();	
 	void Set();	
-	ClassDef(LiveDataAdjuster, 1)
+    void ChangeZ(int up);
+	ClassDef(LiveDataAdjuster, 2)
 };
 
 	
