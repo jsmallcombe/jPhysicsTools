@@ -1,4 +1,4 @@
-// James physics library master  17 Apr 2019
+// James physics library master  15 Oct 2019
 #include <james_fission.h>
 #include <james_gammarays.h>
 #include <james_LeeNucleusExtend.h>
@@ -7,6 +7,7 @@
 #include <james_nuclear_data_ob.h>
 #include <james_physhist_format.h>
 #include <james_physics.h>
+#include <james_PhysObj.h>
 #include <james_root_maths.h>
 #include <james_target.h>
 #include <LeeNucleus.h>

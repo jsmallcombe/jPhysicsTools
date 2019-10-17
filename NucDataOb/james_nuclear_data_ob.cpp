@@ -461,9 +461,9 @@ void nuclear_data_ob::saveall_data_live(string filename){
 		outfile<<live_data_marker[i]<<endl;
 	}
 	
-	for(int i=0;i<I;i++){
 	for(int j=0;j<128;j++){	
 	for(int k=0;k<256;k++){	
+	for(int i=0;i<I;i++){
 		double v=live_data[i][j][k];
 		if(v){
 			outfile<<i<<" ";

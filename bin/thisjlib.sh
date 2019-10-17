@@ -1,4 +1,4 @@
-export JAMESPHYS=/home/js/codes/JPhysics
+export JAMESPHYS=/home/js/Dropbox/codes/JPhysics
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JAMESPHYS/bin:$JAMESPHYS/bin/build:$JAMESPHYS
 export CPATH=$CPATH:$JAMESPHYS/include
 export PATH=$PATH:$JAMESPHYS/include:$JAMESPHYS/src:$JAMESPHYS/bin:$JAMESPHYS/bin/build

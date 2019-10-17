@@ -2,62 +2,51 @@
 //
 //	James Root Library
 //	Relativistic Kinematics and other physics functions
-//	05 Mar 2017
+//	01 June 2019
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesphysics_h
-#define jamesphysics_h
+#ifndef jamesphysobj_h
+#define jamesphysobj_h
 
-#include <iostream>
-#include <cmath>
-#include <vector>
-#include <string>
+#include "james_physics.h"
 
-#include <TObjArray.h>
-#include <TMath.h>
+class jPhysObj
+{
 
-#include <TLorentzVector.h>
-#include <TVector3.h>
+    public:
+    //Shouldn't ever actually need to call as operates as a static class
+    jPhysObj(){};
+    ~jPhysObj(){};
 
-#include "james_root_maths.h"
-#include "james_nuclear_data_ob.h"
+    public:
+    static double pod[4];
+    enum gatenames{cBeamA,cBeamZ,cTargetA,cTargetZ};
 
-using namespace std;
+    static string nucname(double Z,double A=0){
+        stringstream ss;
+        if(A)ss<<floor(A+0.5);
+        ss<<nuclear_data_ob::get_symb(Z);
+        return ss.str();
+    }
+    
+    //////////////////////////////////////////////
+    ////////// Nuclear Data Calculations ///////// 
+    //////////////////////////////////////////////
 
-
-  /////////////////////////////////////////
- ////////// Functionallity Tools ///////// 
-/////////////////////////////////////////
-
-// Returns a shinney new TLorentzVector Ep-4vec [Inputs(P_vector (MeV/c), A_0 (amu))]
-TLorentzVector make_lorentzvec(TVector3,double);
-
-// Frame rotation to frame where vec_1=(0,0,1) [Inputs(Master_vector,Vector_to_change)]
-// Leaves vec_1 unchanged
-// (Change beam LAST and only IF needed)
-void alight_to_Z(TVector3,TVector3&);
-
-
-  //////////////////////////////////////////////
- ////////// Nuclear Data Calculations ///////// 
-//////////////////////////////////////////////
-
-// Returns nominal radius in (fm) [Inputs(A)]
-double classical_radius(double);
-
-// Returns coulomb barrier (MeV) [Inputs(A1,Z1,A2,Z2,gap[fm])]
-double classical_barrier(double A1,double Z1,double A2,double Z2,double fm=0);	
-
-// Returns colulex safe distance of closest approach in fm [Inputs(A1,A2,switch)]
-double safe_r(double,double,int=0);	
-
-// Returns expected fission TKE (MeV) [Inputs(Compound_A,Compound_Z)]
-double viola_TKE(double,double);
-
-// Returns fission TKE from deformation neck calculation (MeV) [Inputs(Frag1_A,Frag1_Z,Frag2_A,Frag2_Z)]
-double neck_TKE_manea(double,double,double,double);
+    static double ClassicalRadius(double A);
+    static double ClassicalBarrier(double A1=pod[cBeamA],double Z1=pod[cBeamZ],double A2=pod[cTargetA],double Z2=pod[cTargetZ]);
+    static double SafeCoulSep(double A1=pod[cBeamA],double A2=pod[cTargetA],int option=0);
+    static double SafeCoulBarrier(double A1=pod[cBeamA],double Z1=pod[cBeamZ],double A2=pod[cTargetA],double Z2=pod[cTargetZ],int option=0);
+    static double SafeCoulCMtheta(double MeVBeam,double AB=pod[cBeamA],double ZB=pod[cBeamZ],double AT=pod[cTargetA],double ZT=pod[cTargetZ]);
+    static double SafeCoulEbeam(double AB,double ZB,double AT,double ZT,double ThetaCMrad=0);
+    inline static double SafeCoulEbeam(double ThetaCMrad=0){
+        return SafeCoulEbeam(pod[cBeamA],pod[cBeamZ],pod[cTargetA],pod[cTargetZ],ThetaCMrad);
+    }
+    
+};
+/*
 
 
 // Return the maximum CM beam scattering angle for safe coulex distance of approach, given beam energy lab
@@ -308,7 +297,7 @@ double beta_fermi_fn_aprox(double,int);
 double unnorm_beta_dist_TKE(double,double,int);
 
 double K_bind_aprox_keV(int);
-
+*/
 
 
 

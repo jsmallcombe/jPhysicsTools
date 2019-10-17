@@ -617,7 +617,7 @@ void PadScanData::Update(Int_t event, Int_t px, Int_t py, TObject *selected)
 		
 		//Larger font for closer matches
 		if(minindex==j)peaknum.SetTextSize(0.04);
-		else if(abs(minindex-j)==1)peaknum.SetTextSize(0.035);
+		else if(abs((signed)minindex-(signed)j)==1)peaknum.SetTextSize(0.035);
 		else peaknum.SetTextSize(0.03);
 		
 		//Add text

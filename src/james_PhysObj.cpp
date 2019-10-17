@@ -6,87 +6,76 @@
 //
 //
 
-#include "james_physics.h"
+#include "james_PhysObj.h"
 
-  /////////////////////////////////////////
- ////////// Functionallity Tools ///////// 
-/////////////////////////////////////////
+double jPhysObj::pod[4]={12,6,12,6};
 
-TLorentzVector make_lorentzvec(TVector3 mom,double mass){
-	return TLorentzVector(mom,get_relE_mom(mom.Mag(),mass));
-}	
 
-void alight_to_Z(TVector3 beam,TVector3& toadjust){
-	if(beam.Theta()>0.000000000000000001){
-		TRotation rot;
-		rot.RotateZ(-beam.Phi());
-		rot.RotateY(-beam.Theta());
-		toadjust*=rot;	
-	}
-	return;
-}
-
-  //////////////////////////////////////////////
- ////////// Nuclear Data Calculations ///////// 
-//////////////////////////////////////////////
-
-//
-double classical_radius(double A){ //input A output in fm
-	return 1.2*pow(round(A),(1.0/3.0));
+double jPhysObj::ClassicalRadius(double A){
+    double fm=classical_radius(A);
+    cout<<endl<<"Nucleus mass "<<A<<" classical radius "<<fm<<" fm."<<endl<<endl;
+	return fm;
 }
 	
-double classical_barrier(double A1,double Z1,double A2,double Z2,double fm){ //input AZAZ,fm output in MeV
-	return jam_phys_e4pieps*round(Z1)*round(Z2)/(classical_radius(A1)+classical_radius(A2)+fm);
+double jPhysObj::ClassicalBarrier(double A1,double Z1,double A2,double Z2){ 
+    pod[cBeamA]=A1;pod[cBeamZ]=Z1;pod[cTargetA]=A2;pod[cTargetZ]=Z2;
+    double MeV=classical_barrier(A1,Z1,A2,Z2);
+    cout<<endl<<nucname(Z1,A1)<<"+"<<nucname(Z2,A2)<<" classical Coulomb barrier "<<MeV<<" MeV."<<endl<<endl;
+    return MeV;
 }
 
-double safe_r(double A1,double A2,int i){
-	if(i==0)return ((classical_radius(A1)+classical_radius(A2))*1.042)+5.1;//Cline1969
-	if(i==1)return ((classical_radius(A1)+classical_radius(A2))*1.2)+2;//Alder and Winther 1975
-	return ((classical_radius(A1)+classical_radius(A2))*1.33);//Friedlander
+
+double jPhysObj::SafeCoulSep(double A1,double A2,int option){
+    pod[cBeamA]=A1;pod[cTargetA]=A2;
+    cout<<endl<<"Safe Coulex seperation (fm) for A "<<floor(A1+0.5)<<" + "<<floor(A2+0.5)<<flush;
+    cout<<endl<<"Opt0 : "<<std::setw(10)<<std::left<<safe_r(A1,A2,0)<<setw(12)<<"x1.25 + 5.1"<<" - Cline1969"<<flush;
+    cout<<endl<<"Opt1 : "<<std::setw(10)<<std::left<<safe_r(A1,A2,1)<<setw(12)<<"x1.44 + 2"<<" - Alder and Winther 1975"<<flush;
+    cout<<endl<<"Opt2 : "<<std::setw(10)<<std::left<<safe_r(A1,A2,2)<<setw(12)<<"x1.6"<<" - Friedlander"<<endl<<endl;
+    return safe_r(A1,A2,option);
 }
 
-double viola_TKE(double A,double Z){ //input AZ output in MeV
-	return (0.1189*Z*Z/(pow(round(A),(1.0/3.0))))+7.3;
+double jPhysObj::SafeCoulBarrier(double A1,double Z1,double A2,double Z2,int option){ 
+    pod[cBeamA]=A1;pod[cBeamZ]=Z1;pod[cTargetA]=A2;pod[cTargetZ]=Z2;
+    double z=jam_phys_e4pieps*Z1*Z2;
+    cout<<endl<<"Safe Coulex seperation (MeV) for "<<nucname(Z1,A1)<<" + "<<nucname(Z2,A2)<<flush;
+    cout<<endl<<"Opt0 : "<<std::setw(12)<<std::left<<z/safe_r(A1,A2,0)<<" - Cline1969"<<flush;
+    cout<<endl<<"Opt1 : "<<std::setw(12)<<std::left<<z/safe_r(A1,A2,1)<<" - Alder and Winther 1975"<<flush;
+    cout<<endl<<"Opt2 : "<<std::setw(12)<<std::left<<z/safe_r(A1,A2,2)<<" - Friedlander"<<endl<<endl;   
+    return z/safe_r(A1,A2,option);
 }
 
-double neck_TKE_manea(double A1,double Z1,double A2,double Z2){ //input AZ output in MeV
-	
-	//MISSING ELIPSOID K CORRECTION TO COULOMB BECAUSE MATHS WAS HARD
-	//APPROX
-	
-	double L=(classical_radius(A1)+classical_radius(A2))/2;
-	double c=pow((5/(4*TMath::Pi())),0.5);
-	double bet1_postsci=nuclear_data_ob::get_beta(Z1,A1);
-	double bet2_postsci=nuclear_data_ob::get_beta(Z2,A2);
-	double a1_postsci=classical_radius(A1)*(1+c*bet1_postsci);
-	double a2_postsci=classical_radius(A2)*(1+c*bet2_postsci);
-	double x=L/(a1_postsci+a2_postsci);
-	
-	double g1=(1+c*bet1_postsci)/(1-0.5*c*bet1_postsci);
-	double g2=(1+c*bet2_postsci)/(1-0.5*c*bet2_postsci);
-	double f1=x*x*x*g1*g1/8;
-	double f2=x*x*x*g2*g2/8;
-
-	double r1=0.5*x*a1_postsci;
-	double r2=0.5*x*a2_postsci;
-
-	double bet1_presci=nuclear_data_ob::get_beta(Z1*(1-f1),(A1)*(1-f1));
-	double bet2_presci=nuclear_data_ob::get_beta(Z2*(1-f2),(A2)*(1-f2));
-	double a1_presci=classical_radius(A1*(1-f1))*(1+c*bet1_presci);
-	double a2_presci=classical_radius(A2*(1-f2))*(1+c*bet2_presci);
-	
-	double terms=(1-f1)*(1-f2)*Z1*Z2/(L+a1_presci+a2_presci);
-	terms+=f1*(1-f2)*Z1*Z2/(r1+r2+r2+a2_presci);
-	terms+=f2*(1-f1)*Z1*Z2/(r2+r1+r1+a1_presci);
-	terms+=f2*f1*Z1*Z2/(r2+r1);	
-	
-	return 1.44*terms;
+double jPhysObj::SafeCoulCMtheta(double MeVBeam,double AB,double ZB,double AT,double ZT){
+    pod[cBeamA]=AB;pod[cBeamZ]=ZB;pod[cTargetA]=AT;pod[cTargetZ]=ZT;
+    double rad=safe_coulex_angle(AB,ZB,AT,ZT,MeVBeam);
+    cout<<endl<<"Safe Coulex CM angle (MeV) for "<<nucname(ZB,AB)<<" beam + "<<nucname(ZT,AT)<<" target, E Beam "<<MeVBeam<<" MeV :"<<endl;
+    cout<<std::setw(12)<<std::right<<rad<<" rad"<<endl;
+    cout<<std::setw(12)<<std::right<<180*rad/TMath::Pi()<<" deg"<<endl<<endl;
+    return rad;
 }
 
-// Return the maximum CM beam scattering angle for safe coulex distance of approach, given beam energy lab
-double safe_coulex_angle(double AB,double ZB,double AT,double ZT,double e_lab){ //input AZAZ,MeV output in rad
-	return happy_ruth_theta(AB,ZB,AT,ZT,get_com_KE(get_rel_mom(e_lab,AB),AB,AT));
+double jPhysObj::SafeCoulEbeam(double AB,double ZB,double AT,double ZT,double CMTheta){
+    double rad=pi;
+
+    pod[cBeamA]=AB;pod[cBeamZ]=ZB;pod[cTargetA]=AT;pod[cTargetZ]=ZT;
+    cout<<endl<<"Safe E beam for "<<nucname(ZB,AB)<<" beam + "<<nucname(ZT,AT)<<" target."<<endl;
+    if(CMTheta){
+        rad=CMTheta;
+        if(rad>pi)rad*=pi/180.;
+        cout<<"For max CM angle "<<rad<<" rad."<<endl;
+    }
+    
+    double MeV=safe_coulex_beam(AB,ZB,AT,ZT,rad);
+    cout<<std::setw(12)<<std::right<<MeV<<" MeV"<<endl<<endl;
+    return MeV;
 }
+
+
+/*
+
+
+
+
+
 
 // Returns the maximum beam energy for safe coulex distance of approach for a given CM beam scattering angle
 double safe_coulex_beam(double A1,double Z1,double A2,double Z2,double theta_cm){ //input AZAZ,rad output in MeV
@@ -98,17 +87,7 @@ double safe_coulex_beam(double A1,double Z1,double A2,double Z2,double theta_cm)
 	return get_KE(reverseal_mom_calc(momentum_energysplit_CoM(KE_cm_tot,A1,A2),A1, A2),A1);
 }
 
-// Return the maximum CM beam scattering angle for safe coulex distance of approach, given CoM total KE
-double happy_ruth_theta(double A1,double Z1,double A2,double Z2,double e_cm){ //input AZAZ,MeV output in rad
-	double rmin=safe_r(A1,A2,0);//hardsphere touching distance + a little in fm
-	double Etouch=jam_phys_e4pieps*Z1*Z2/rmin;//MeV. not actually touching
-	if(e_cm<=Etouch) return pi;
 
-	double b=(sqrt(1-(Etouch/e_cm)))*rmin;//impact parameter for selected rmin
-	
-	double alpha=jam_phys_e4pieps*Z1*Z2/(e_cm*b);
-	return 2*asin(alpha/sqrt(4+alpha*alpha)); //theta from that impact parameter cm
-}
 
 
 double rutherford_crosssection(double Z1,double Z2,double e_cm,double thetamin,double thetamax){ //input AZAZ,MeV,rad,rad output in mb
@@ -866,4 +845,4 @@ double K_bind_aprox_keV(int Z){
 	//From Radiation Physics for Medical Physicists By Ervin B. Podgorsak
 }
 
-
+*/
