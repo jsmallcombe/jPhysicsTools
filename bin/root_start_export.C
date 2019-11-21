@@ -1,1 +1,1 @@
-{gSystem->Load("libjames_phys_export.so");cos2(0.1);}
+{gSystem->Load("libjroot_phys_export.so");cos2(0.1);}

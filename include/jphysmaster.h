@@ -1,13 +1,13 @@
-// James physics library master  15 Oct 2019
-#include <james_fission.h>
-#include <james_gammarays.h>
-#include <james_LeeNucleusExtend.h>
-#include <james_legendre.h>
-#include <james_nuclear_data_gui.h>
-#include <james_nuclear_data_ob.h>
-#include <james_physhist_format.h>
-#include <james_physics.h>
-#include <james_PhysObj.h>
-#include <james_root_maths.h>
-#include <james_target.h>
+// jPhysics library master  21 Nov 2019
+#include <j_fission.h>
+#include <j_gammarays.h>
+#include <j_LeeNucleusExtend.h>
+#include <j_legendre.h>
+#include <j_nuclear_data_gui.h>
+#include <j_nuclear_data_ob.h>
+#include <j_physhist_format.h>
+#include <j_physics.h>
+#include <j_PhysObj.h>
+#include <j_root_maths.h>
+#include <j_target.h>
 #include <LeeNucleus.h>

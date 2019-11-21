@@ -1,14 +1,14 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Personal Maths Function Definition
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesrootmath_h
-#define jamesrootmath_h
+#ifndef jROORrootmath_h
+#define jROORrootmath_h
 
 #include <cmath>
 #include <TMath.h>

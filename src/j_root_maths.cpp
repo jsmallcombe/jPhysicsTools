@@ -1,12 +1,4 @@
-//
-//
-//	James Physics version 1.3
-// 	26/8/12		12/8/2014
-//	james.smallcombe@outlook.com
-//
-//
-
-#include "james_root_maths.h"
+#include "j_root_maths.h"
 
 /////////////////////////////////////////////////////
 /////////// Trig functions for lazy typing   ////////

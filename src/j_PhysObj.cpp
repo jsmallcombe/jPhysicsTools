@@ -1,12 +1,12 @@
 //
 //
-//	james_physics version 2.0
+//	j_physics version 2.0
 // 	27/1/25		25/1/2015
 //	james.smallcombe@outlook.com
 //
 //
 
-#include "james_PhysObj.h"
+#include "j_PhysObj.h"
 
 double jPhysObj::pod[4]={12,6,12,6};
 

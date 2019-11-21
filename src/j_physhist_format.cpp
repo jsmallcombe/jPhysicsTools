@@ -1,4 +1,4 @@
-#include "james_physhist_format.h"
+#include "j_physhist_format.h"
 
 
 void AddElectronLabel(double Ey,string Z,bool exact,bool M,string text,TVirtualPad* pad,TH1* hist,TVirtualPad* pairpad){
@@ -124,7 +124,7 @@ void AddElectronGammaLabels(TCanvas* bisected,double UrangeL,double UrangeU,doub
 ///////////// Level Scheme and Drawing /////////////////
 
 
-void JamesLevelScheme::AddLevel(unsigned int band,double Energy,string Label,unsigned int col){
+void jPhysLevelScheme::AddLevel(unsigned int band,double Energy,string Label,unsigned int col){
 	while(Energies.size()<=band){
 			Energies.push_back(std::vector< double >());
 			LevelColor.push_back(std::vector< unsigned int >());
@@ -140,13 +140,13 @@ void JamesLevelScheme::AddLevel(unsigned int band,double Energy,string Label,uns
 	
 	
 	
-void JamesLevelScheme::CalcVert(double Y0,double YRange){
+void jPhysLevelScheme::CalcVert(double Y0,double YRange){
 	VertScale=YRange/(MaxE-MinE);
 	VertOff=MinE -Y0/VertScale;
 }
 
 
-void JamesLevelScheme::DrawScheme(double X0,double Y0,double YRange){
+void jPhysLevelScheme::DrawScheme(double X0,double Y0,double YRange){
 	gX0=X0;
 	gPad->Update();
 	CalcVert(Y0,YRange);
@@ -155,14 +155,14 @@ void JamesLevelScheme::DrawScheme(double X0,double Y0,double YRange){
 	DrawExtraLabels();
 }
 
-void JamesLevelScheme::DrawLevels(){
+void jPhysLevelScheme::DrawLevels(){
 	gPad->Update();
 	for(unsigned int b=0;b<Energies.size();b++){
 		DrawBand(b);
 	}
 }
 
-void JamesLevelScheme::DrawTransitions(){
+void jPhysLevelScheme::DrawTransitions(){
 	gPad->Update();
 	for(unsigned int t=0;t<Transitions.size();t++){
 		if((unsigned)Transitions[t][0]<Energies.size()&&(unsigned)Transitions[t][2]<Energies.size()){
@@ -183,7 +183,7 @@ void JamesLevelScheme::DrawTransitions(){
 }
 
 
-void JamesLevelScheme::DrawExtraLabels(){
+void jPhysLevelScheme::DrawExtraLabels(){
 	for(unsigned int i=0;i<ExtraLabels.size();i++){
 		
 		double X=BandX(ExtraLabels[i].Band);
@@ -203,7 +203,7 @@ void JamesLevelScheme::DrawExtraLabels(){
 
 
 
-void JamesLevelScheme::DrawLevel(unsigned int band,unsigned int level){
+void jPhysLevelScheme::DrawLevel(unsigned int band,unsigned int level){
 
 	double X=BandX(band);
 	double E=Energies[band][level];
@@ -230,7 +230,7 @@ void JamesLevelScheme::DrawLevel(unsigned int band,unsigned int level){
 	latex.DrawLatexNDC(X+StateWidth*0.5,Y+LabelYOffset,elab.str().c_str());
 }
 
-void JamesLevelScheme::DrawVerticalArrowPad(double X1,double Y1,double Y2,unsigned int col){
+void jPhysLevelScheme::DrawVerticalArrowPad(double X1,double Y1,double Y2,unsigned int col){
 	double X2=X1;
 	gPad->Update();
 	PadNDCtoUser(X1,Y1,gPad);
@@ -242,7 +242,7 @@ void JamesLevelScheme::DrawVerticalArrowPad(double X1,double Y1,double Y2,unsign
 	arrow.DrawArrow(X1,Y1,X2,Y2,TextSize*ArrowSize,"|>");
 }
 
-void JamesLevelScheme::DrawBand(unsigned int b){
+void jPhysLevelScheme::DrawBand(unsigned int b){
 	if(b>=Energies.size())return;
 	double X=BandX(b);
 	vector< int > ordered=vector_order_gen(Energies[b],true);
@@ -262,7 +262,7 @@ void JamesLevelScheme::DrawBand(unsigned int b){
 }
 
 
-void JamesLevelScheme::DrawInterBandExtension(unsigned int band1,unsigned int level1,unsigned int band2,double Xoffset){
+void jPhysLevelScheme::DrawInterBandExtension(unsigned int band1,unsigned int level1,unsigned int band2,double Xoffset){
 	if(band1>=Energies.size())return;
 	if(level1>=Energies[band1].size())return;
 	if(band1==band2)return;

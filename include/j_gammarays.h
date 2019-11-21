@@ -1,14 +1,14 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Relativistic Kinematics and other physics functions
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesgammarays_h
-#define jamesgammarays_h
+#ifndef jROORgammarays_h
+#define jROORgammarays_h
 
 #include <iostream>
 #include <cmath>
@@ -24,8 +24,8 @@
 #include <TRandom2.h>
 
 
-#include "james_root_maths.h"
-#include "james_effpeaks.h"
+#include "j_root_maths.h"
+#include "j_effpeaks.h"
 
 using namespace std;
 

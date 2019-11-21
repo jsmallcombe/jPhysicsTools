@@ -1,4 +1,4 @@
-#include "james_nuclear_data_ob.h"
+#include "j_nuclear_data_ob.h"
 
 ////////////////////////////////////////
 /////////// Static Members   /////////// 
@@ -56,13 +56,13 @@ void nuclear_data_ob::Clear(){
 
 TTree* nuclear_data_ob::LeeData(){
 	if(LeeTree)return LeeTree;
-	const char * val = std::getenv("JAMESPHYS");
+	const char * val = std::getenv("J_PHYS");
 	if ( val == 0 ) {
-		cout<<endl<<"System Enviromental Value JAMESPHYS not set."<<endl;
+		cout<<endl<<"System Enviromental Value J_PHYS not set."<<endl;
 		return 0;
 	}
 	string LeeFileName=(string)val+"/NucDataOb/pensExtract.root";
-// 	cout<<endl<<"System Enviromental Value JAMESPHYS = "<<path<<endl;
+// 	cout<<endl<<"System Enviromental Value J_PHYS = "<<path<<endl;
 	TFile* LeeFile=new TFile(LeeFileName.c_str(),"READ");
 	if(!LeeFile->IsOpen()){
 		cout<<endl<<"Data file "<<LeeFileName<<" not found."<<endl;

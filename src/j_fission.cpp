@@ -1,12 +1,12 @@
 //
 //
-//	james_fission version 1.2
+//	j_fission version 1.2
 // 	27/1/25		25/1/2015
 //	james.smallcombe@outlook.com
 //
 //
 
-#include "james_fission.h"
+#include "j_fission.h"
 
 
 

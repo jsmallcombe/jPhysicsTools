@@ -1,14 +1,14 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Functions for aiding in the analysis of fission fragment experiments
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesfission_h
-#define jamesfission_h
+#ifndef jROORfission_h
+#define jROORfission_h
 
 #include <iostream>
 #include <cmath>
@@ -21,10 +21,10 @@
 #include <TH2.h>
 #include <TVector3.h>
 
-#include "james_physics.h"
-#include "james_nuclear_data_ob.h"
-#include "james_target.h"
-#include "james_root_maths.h"
+#include "j_physics.h"
+#include "j_nuclear_data_ob.h"
+#include "j_target.h"
+#include "j_root_maths.h"
 
 using namespace std;
 

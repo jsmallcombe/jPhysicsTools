@@ -1,14 +1,14 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Target Object and related functions
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesnar_h
-#define jamesnar_h
+#ifndef jROORnar_h
+#define jROORnar_h
 
 #include <iostream>
 #include <cmath>
@@ -54,8 +54,8 @@
 // 	};
 // };
 
-#include "james_root_maths.h"
-#include "james_physics.h"
+#include "j_root_maths.h"
+#include "j_physics.h"
 
 
 using namespace std;

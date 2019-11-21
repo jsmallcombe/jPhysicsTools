@@ -1,14 +1,14 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Relativistic Kinematics and other physics functions
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesphysics_h
-#define jamesphysics_h
+#ifndef jROORphysics_h
+#define jROORphysics_h
 
 #include <iostream>
 #include <cmath>
@@ -21,8 +21,8 @@
 #include <TLorentzVector.h>
 #include <TVector3.h>
 
-#include "james_root_maths.h"
-#include "james_nuclear_data_ob.h"
+#include "j_root_maths.h"
+#include "j_nuclear_data_ob.h"
 
 using namespace std;
 

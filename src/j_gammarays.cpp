@@ -1,12 +1,4 @@
-//
-//
-//	James Sperhical harmonics and stuff
-// 	30/03/2016
-//	james.smallcombe@outlook.com
-//
-//
-
-#include "james_gammarays.h"
+#include "j_gammarays.h"
 
 
 double ComptonProb_dsig_dT(double KeV,double keV0,bool electron){

@@ -1,16 +1,16 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Relativistic Kinematics and other physics functions
 //	01 June 2019
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesphysobj_h
-#define jamesphysobj_h
+#ifndef jROORphysobj_h
+#define jROORphysobj_h
 
-#include "james_physics.h"
+#include "j_physics.h"
 
 class jPhysObj
 {

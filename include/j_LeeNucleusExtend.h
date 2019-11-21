@@ -1,6 +1,6 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Classes to automate interact with Lees ENSDF parsed data file
 //	05 Mar 2017
 //	james.smallcombe@outlook.com

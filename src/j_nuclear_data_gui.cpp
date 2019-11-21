@@ -1,4 +1,4 @@
-#include "james_nuclear_data_gui.h"
+#include "j_nuclear_data_gui.h"
 
 	//////////////////////////////////////////////////
 	///////////     Live Data Slicer        ///////////

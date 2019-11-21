@@ -1,6 +1,6 @@
 #
 #
-#	James Root Library
+#	jRoot Phys Library
 #	15 Sep 2016
 #	james.smallcombe@outlook.com
 #
@@ -14,24 +14,24 @@ EXTERNAL_LIBS = -lwignerSymbols `pkg-config --cflags --libs gsl`
 
 
 
-JAMES_LIB = $(shell pwd)
-JAMES_INCLUDE = $(shell pwd)/include
+J_LIB = $(shell pwd)
+J_INCLUDE = $(shell pwd)/include
 
 CC = g++
-CFLAGS = -std=c++11 -g -fPIC -Wall $(ROOT_GCC_FLAGS) -I$(JAMES_INCLUDE)
-#-Xlinker --verbose -std=c++0x -I$(JAMESPHYS)/include
+CFLAGS = -std=c++11 -g -fPIC -Wall $(ROOT_GCC_FLAGS) -I$(J_INCLUDE)
+#-Xlinker --verbose -std=c++0x -I$(J_PHYS)/include
 
-LIBRS = -L$(JAMES_INCLUDE) $(ROOT_LIBS) -lJanalysistools
+LIBRS = -L$(J_INCLUDE) $(ROOT_LIBS) -lJanalysistools
 
-HEAD = $(wildcard include/james*.h)
+HEAD = $(wildcard include/j_*.h)
 HEADEX = $(filter-out %fission.h %legendre.h %target.h %format.h %narget.h ,$(HEAD))
 OBJECTS = $(patsubst include/%.h,bin/build/%.o,$(HEAD))
 OBJECTSEX= $(patsubst include/%.h,bin/build/%.o,$(HEADEX))
 
 MINI = $(patsubst mini_program/%.C,bin/%,$(wildcard mini_program/*.C))
 
-TARG = bin/libjames_phys.so
-TARGB = bin/libjames_phys_export.so
+TARG = bin/libjroot_phys.so
+TARGB = bin/libjroot_phys_export.so
 	
 # OBJECTS+= bin/build/yield.o
 # OBJECTSEX+= bin/build/yield.o
@@ -55,13 +55,13 @@ $(TARGB): $(TARG) bin/DictOutputEx.cxx
 
 bin/DictOutput.cxx: $(HEAD)
 	bash bin/build/link.sh $(HEAD)
-	rootcint -f $@ -c -I$(JAMES_INCLUDE) $(HEAD) bin/build/Linkdef.h
+	rootcint -f $@ -c -I$(J_INCLUDE) $(HEAD) bin/build/Linkdef.h
 
 bin/DictOutputEx.cxx: $(HEADEX) bin/DictOutput.cxx
 	bash bin/build/link.sh $(HEADEX)
-	rootcint -f $@ -c -I$(JAMES_INCLUDE) $(HEADEX) bin/build/Linkdef.h	
+	rootcint -f $@ -c -I$(J_INCLUDE) $(HEADEX) bin/build/Linkdef.h	
 	
-bin/build/james_nuclear_data_ob.o: NucDataOb/james_nuclear_data_ob.cpp include/james_nuclear_data_ob.h  NucDataOb/* NucDataOb/*/*
+bin/build/j_nuclear_data_ob.o: NucDataOb/j_nuclear_data_ob.cpp include/j_nuclear_data_ob.h  NucDataOb/* NucDataOb/*/*
 	bash NucDataOb/BuildNucData.sh
 	$(CC) $(CFLAGS) -o $@ -c $< $(LIBRS)
 
@@ -76,13 +76,13 @@ bin/build/%.o: src/*/%.cpp include/%.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LIBRS)
 
 bin/%: mini_program/%.C $(TARG)
-	$(CC) $(CFLAGS) -o $@ $< $(LIBRS) -ljames_phys #-Wl,--verbose
+	$(CC) $(CFLAGS) -o $@ $< $(LIBRS) -lX11 -ljroot_phys #-Wl,--verbose
 	chmod +x $@
 
 clean:
-	rm -f $(JAMES_LIB)/bin/build/*.o
-	rm -f $(JAMES_LIB)/bin/build/Linkdef.h
-	rm -f $(JAMES_LIB)/bin/DictOutput*
+	rm -f $(J_LIB)/bin/build/*.o
+	rm -f $(J_LIB)/bin/build/Linkdef.h
+	rm -f $(J_LIB)/bin/DictOutput*
 	rm -f $(MINI)
 	rm -f $(TARG)
 	rm -f $(TARGB)

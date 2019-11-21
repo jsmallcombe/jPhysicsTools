@@ -1,12 +1,4 @@
-//
-//
-//	James Sperhical harmonics and stuff
-// 	30/03/2016
-//	james.smallcombe@outlook.com
-//
-//
-
-#include "james_legendre.h"
+#include "j_legendre.h"
 
 
 long j_int_fac(long i){

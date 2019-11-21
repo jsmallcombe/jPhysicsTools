@@ -1,6 +1,6 @@
 {
 string dir=gSystem->pwd();	
-string load=dir+"/bin/libjames_phys.so";
+string load=dir+"/bin/libjroot_phys.so";
 dir=".x "+dir+"/Test";
 
 //load the library	

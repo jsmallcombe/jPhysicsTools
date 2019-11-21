@@ -1,14 +1,14 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Formatting tools for TH1/2/3
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jamesphyshistfor_h
-#define jamesphyshistfor_h
+#ifndef jROORphyshistfor_h
+#define jROORphyshistfor_h
 
 #include <iostream>
 #include <cmath>
@@ -28,10 +28,10 @@
 #include <TROOT.h>
 #include <TPolyLine.h>
 
-#include "james_gpad_tools.h"
-#include "james_fitting.h"
-#include "james_nuclear_data_ob.h"
-#include "james_hist_formatting.h"
+#include "j_gpad_tools.h"
+#include "j_fitting.h"
+#include "j_nuclear_data_ob.h"
+#include "j_hist_formatting.h"
 
 using namespace std;
 
@@ -46,7 +46,7 @@ void AddElectronLabel(double Ey,string Z,bool exact=false,bool M=true,string tex
 void AddElectronGammaLabels(TCanvas* bisected,double E,string Z,bool exact=false,string text="",bool M=true);
 void AddElectronGammaLabels(TCanvas* bisected,double UrangeL,double UrangeU,double E,string Z,string text="");
 
-class JamesLevelScheme
+class jPhysLevelScheme
 { 
     public:
 	typedef struct LevelLabS{
@@ -90,9 +90,9 @@ class JamesLevelScheme
 	
     public:
 	
-	JamesLevelScheme():LineWidth(2),StateWidth(0.1),MaxE(-1),MinE(-1),VertScale(1),VertOff(0),KeVLabel(0),DefaultIntra(0),
+	jPhysLevelScheme():LineWidth(2),StateWidth(0.1),MaxE(-1),MinE(-1),VertScale(1),VertOff(0),KeVLabel(0),DefaultIntra(0),
 	TextSize(0.05),LabelYOffset(0.005),BandXGap(0.2),ArrowSize(0.3),gX0(0.2){};
-	~JamesLevelScheme(){};
+	~jPhysLevelScheme(){};
 	void AddLevel(unsigned int band,double Energy,string Label=" ",unsigned int col=1);
 	void AddTransition(unsigned int band1,unsigned int level1,unsigned int band2,unsigned int level2,int col=1,double Xoffset=0){
 		Transitions.push_back(std::vector< int >{(signed)band1,(signed)level1,(signed)band2,(signed)level2,col,(int)(Xoffset*1000)});
@@ -125,4 +125,4 @@ class JamesLevelScheme
 
 
 
-#endif // #ifdef jameshistfor_h
+#endif // #ifdef jROORhistfor_h

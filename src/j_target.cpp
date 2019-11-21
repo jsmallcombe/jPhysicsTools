@@ -1,12 +1,4 @@
-//
-//
-//	James Target Object and related functions 2.1
-// 	27/01/25		25/01/2015
-//	james.smallcombe@outlook.com
-//
-//
-
-#include "james_target.h"
+#include "j_target.h"
 
 ///////////////////////////////////////////////
 /////////// Conversion functions    ///////////

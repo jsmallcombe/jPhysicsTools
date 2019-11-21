@@ -1,6 +1,6 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Object for storing, loading and viewing nuclear data
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
@@ -38,10 +38,10 @@
 #include <TColor.h>
 #include <TGColorSelect.h>
 
-#include "james_LeeNucleusExtend.h"
+#include "j_LeeNucleusExtend.h"
 
-#include "james_hist_formatting.h"
-#include "james_root_maths.h"
+#include "j_hist_formatting.h"
+#include "j_root_maths.h"
 
   //////////////////////////////////////
  ////////// Useful Constants ////////// 

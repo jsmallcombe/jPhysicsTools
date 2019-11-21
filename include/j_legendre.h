@@ -1,19 +1,19 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Manual calculation of legendre polynomials and gamma ray distributions
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
 //
 //
 
-#ifndef jameslegend_h
-#define jameslegend_h
+#ifndef jROORlegend_h
+#define jROORlegend_h
 
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "james_root_maths.h"
+#include "j_root_maths.h"
 
 #if !defined (__CINT__) || ROOT_VERSION_CODE > 336418
 

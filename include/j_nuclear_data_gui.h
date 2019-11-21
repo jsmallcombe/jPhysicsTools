@@ -1,6 +1,6 @@
 //
 //
-//	James Root Library
+//	jPhys Root Library
 //	Object for storing, loading and viewing nuclear data
 //	05 Mar 2017
 //	james.smallcombe@outlook.com
@@ -47,8 +47,8 @@
 
 
 
-#include "james_nuclear_data_ob.h"
-#include "james_utility.h"
+#include "j_nuclear_data_ob.h"
+#include "j_utility.h"
 
 class LiveDataGUIStyleControl;
 class LiveDataAdder;
