@@ -12,8 +12,6 @@ ROOT_GCC_FLAGS = `root-config --cflags`
 # EXTERNAL_LIBS = -lwignerSymbols -lgsl
 EXTERNAL_LIBS = -lwignerSymbols `pkg-config --cflags --libs gsl`
 
-
-
 J_LIB = $(shell pwd)
 J_INCLUDE = $(shell pwd)/include
 
@@ -21,7 +19,7 @@ CC = g++
 CFLAGS = -std=c++11 -g -fPIC -Wall $(ROOT_GCC_FLAGS) -I$(J_INCLUDE)
 #-Xlinker --verbose -std=c++0x -I$(J_PHYS)/include
 
-LIBRS = -L$(J_INCLUDE) $(ROOT_LIBS) -lJanalysistools
+LIBRS = -L$(J_INCLUDE) $(ROOT_LIBS) -lJanalysistools -lX11
 
 HEAD = $(wildcard include/j_*.h)
 HEADEX = $(filter-out %fission.h %legendre.h %target.h %format.h %narget.h ,$(HEAD))
@@ -36,13 +34,16 @@ TARGB = bin/libjroot_phys_export.so
 # OBJECTS+= bin/build/yield.o
 # OBJECTSEX+= bin/build/yield.o
 
-DUMMY: $(TARGB) $(MINI)
+DUMMY: $(TARGB) $(MINI) bin/BuildInfo
 
 main: $(TARG)
 export: $(TARGB)
 
 date:
 	bash bin/build/date.sh $(HEAD)
+
+bin/BuildInfo:
+	bash bin/build/buildinfo.sh
 	
 $(TARG): $(OBJECTS) bin/DictOutput.cxx
 	$(CC) $(CFLAGS) -o $@ -shared bin/DictOutput.cxx $(OBJECTS) -I. $(LIBRS) $(EXTERNAL_LIBS) # -Wl,--verbose
@@ -76,13 +77,20 @@ bin/build/%.o: src/*/%.cpp include/%.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LIBRS)
 
 bin/%: mini_program/%.C $(TARG)
-	$(CC) $(CFLAGS) -o $@ $< $(LIBRS) -lX11 -ljroot_phys #-Wl,--verbose
+	$(CC) $(CFLAGS) -o $@ $< $(LIBRS) -ljroot_phys #-Wl,--verbose
 	chmod +x $@
+		
+#-lX11
+# /usr/include/X11/
+# #include <X11/Xatom.h>
+# #include <X11/Xlib.h>
 
+	
 clean:
 	rm -f $(J_LIB)/bin/build/*.o
 	rm -f $(J_LIB)/bin/build/Linkdef.h
 	rm -f $(J_LIB)/bin/DictOutput*
+	rm -f $(J_LIB)/bin/BuildInfo
 	rm -f $(MINI)
 	rm -f $(TARG)
 	rm -f $(TARGB)
