@@ -77,7 +77,7 @@ bin/build/%.o: src/*/%.cpp include/%.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LIBRS)
 
 bin/%: mini_program/%.C $(TARG)
-	$(CC) $(CFLAGS) -o $@ $< $(LIBRS) -ljroot_phys #-Wl,--verbose
+	$(CC) $(CFLAGS) -o $@ $< $(LIBRS) -L$(shell pwd)/bin -ljroot_phys #-Wl,--verbose
 	chmod +x $@
 		
 #-lX11
@@ -87,6 +87,7 @@ bin/%: mini_program/%.C $(TARG)
 
 	
 clean:
+	rm -f $(J_LIB)/bin/*.*
 	rm -f $(J_LIB)/bin/build/*.o
 	rm -f $(J_LIB)/bin/build/Linkdef.h
 	rm -f $(J_LIB)/bin/DictOutput*
