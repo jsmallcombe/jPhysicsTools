@@ -134,7 +134,7 @@ double nuclear_data_ob::get_mass_MeV(int z,int a){
 
 double nuclear_data_ob::BE(int z,int a){
 	double P=get_mass_excess(z,a);
-	if(P&&a>z)return get_mass_excess(1,1)*z+get_mass_excess(0,1)*(a-z)+jam_phys_511*(z)-P;
+	if((P&&a>z)||(z==6&&a==12))return get_mass_excess(1,1)*z+get_mass_excess(0,1)*(a-z)+jam_phys_511*(z)-P;
 	return 0;
 }
 
