@@ -69,6 +69,13 @@ double safe_coulex_beam(double AB,double Z1,double AT,double Z2,double rad_cm=pi
 // Returns angle at which ruthford scattering uncleam (rad) [Inputs(A1,Z1,A2,Z2,E_cm)]
 double happy_ruth_theta(double AB,double Z1,double AT,double Z2,double E_cm);
 
+// Returns the impact parameter for coulomb at given E and cm_theta
+double coulex_impact_parameter(double AB,double ZB,double AT,double ZT,double e_cm,double theta_cm);
+
+// Returns the impact parameter of safe coulex at that E and cm_theta
+double coulex_safe_impact_parameter(double AB,double ZB,double AT,double ZT,double e_cm);
+
+
 // Returns integrated 2pi rutherford_crosssection in mb [Inputs(Z1,Z2,E_cm,thetamin_cm,thetamax_cm)]
 double rutherford_crosssection(double z1,double z2,double EcmMeV,double thetamin_cm,double thetamax_cm);
 

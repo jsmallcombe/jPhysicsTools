@@ -39,8 +39,8 @@ double classical_barrier(double A1,double Z1,double A2,double Z2,double fm){ //i
 	return jam_phys_e4pieps*round(Z1)*round(Z2)/(classical_radius(A1)+classical_radius(A2)+fm);
 }
 
-double safe_r(double A1,double A2,int i){
-	if(i==0)return ((classical_radius(A1)+classical_radius(A2))*1.042)+5.1;//Cline1969
+double safe_r(double A1,double A2,int i){  // NOTE difference in R definition, here we use 1.2 as the base value (giving 1.25 and 1.44
+	if(i==0)return ((classical_radius(A1)+classical_radius(A2))/0.96)+5.1;//Cline1969    
 	if(i==1)return ((classical_radius(A1)+classical_radius(A2))*1.2)+2;//Alder and Winther 1975
 	return ((classical_radius(A1)+classical_radius(A2))*1.33);//Friedlander
 }
@@ -100,14 +100,29 @@ double safe_coulex_beam(double A1,double Z1,double A2,double Z2,double theta_cm)
 
 // Return the maximum CM beam scattering angle for safe coulex distance of approach, given CoM total KE
 double happy_ruth_theta(double A1,double Z1,double A2,double Z2,double e_cm){ //input AZAZ,MeV output in rad
-	double rmin=safe_r(A1,A2,0);//hardsphere touching distance + a little in fm
-	double Etouch=jam_phys_e4pieps*Z1*Z2/rmin;//MeV. not actually touching
-	if(e_cm<=Etouch) return pi;
+	double b=coulex_safe_impact_parameter(A1,Z1,A2,Z2,e_cm);
+    if(b>0){	
+        double alpha=jam_phys_e4pieps*Z1*Z2/(e_cm*b);
+        return 2*asin(alpha/sqrt(4+alpha*alpha)); //theta from that impact parameter cm
+    }
+     return pi;
+}
 
-	double b=(sqrt(1-(Etouch/e_cm)))*rmin;//impact parameter for selected rmin
+/// https://farside.ph.utexas.edu/teaching/336k/Newton/node51.html
+
+double coulex_impact_parameter(double AB,double ZB,double AT,double ZT,double e_cm,double theta_cm){
+    double b=jam_phys_e4pieps*ZB*ZT/(e_cm*tan(theta_cm/2));
+	return b; 
+}
+
+double coulex_safe_impact_parameter(double AB,double ZB,double AT,double ZT,double e_cm){
+    
+    double rmin=safe_r(AB,AT,0);//hardsphere touching distance + a little in fm
+	double Etouch=jam_phys_e4pieps*ZB*ZT/rmin;//MeV. not actually touching
+	if(e_cm<=Etouch) return 0;
+	double b=(sqrt(1-(Etouch/e_cm)))*rmin; //impact parameter for selected rmin and e_cm
 	
-	double alpha=jam_phys_e4pieps*Z1*Z2/(e_cm*b);
-	return 2*asin(alpha/sqrt(4+alpha*alpha)); //theta from that impact parameter cm
+	return b; 
 }
 
 
