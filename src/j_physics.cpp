@@ -547,7 +547,19 @@ double* kinetic_lab_calcs_P(double Ebeam,double ABeam,double ATarg,double thetal
 	
 	double pcm0 = bg*ATarg*jam_phys_amu;
 	double pcm1 = pcm0;
-	if(!((ABeam==AA)&&(ATarg==AB))) pcm1 = sqrt(((ATarg*ATarg+ABeam*ABeam-AA*AA-AB*AB)*jam_phys_amu*jam_phys_amu + 2*pcm0*pcm0)/2);
+	if(!((ABeam==AA)&&(ATarg==AB))){
+		double Ecmtot=sqrt(ATarg*ATarg*jam_phys_amu*jam_phys_amu+pcm0*pcm0);
+		Ecmtot+=sqrt(ABeam*ABeam*jam_phys_amu*jam_phys_amu+pcm0*pcm0);
+		
+		double m1=AA*jam_phys_amu;
+		double m2=AB*jam_phys_amu;
+		double E=Ecmtot;
+		pcm1=sqrt((E*E-pow(m1+m2,2))*(E*E-pow(m1-m2,2)))/(2*E);//Not sure this equation is correct
+		
+		//This was wrong, was summing particle E^2, has be summed as E i.e. root E^2
+// 		pcm1 = sqrt(((ATarg*ATarg+ABeam*ABeam-AA*AA-AB*AB)*jam_phys_amu*jam_phys_amu + 2*pcm0*pcm0)/2);
+		
+	}
 
 	//is there a max angle problem//max lab angle
 	bool A=false,B=false;
