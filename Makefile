@@ -6,8 +6,12 @@
 #
 #
 
-ROOT_LIBS = `root-config --glibs`
-ROOT_GCC_FLAGS = `root-config --cflags`
+
+# ROOT_LIBS = `root-config --glibs`
+# ROOT_GCC_FLAGS = `root-config --cflags`
+ROOT_LIBS = $(shell root-config --glibs)
+ROOT_GCC_FLAGS = $(shell root-config --cflags)
+ROOT_LIBSEXTRA = -lSpectrum -lMinuit -lTreeViewer -lROOTTreeViewer
 
 # EXTERNAL_LIBS = -lwignerSymbols -lgsl
 EXTERNAL_LIBS = -lwignerSymbols `pkg-config --cflags --libs gsl`
