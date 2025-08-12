@@ -25,7 +25,7 @@
 
 
 #include "j_root_maths.h"
-#include "j_effpeaks.h"
+#include "j_fitting_effpeaks.h"
 
 using namespace std;
 

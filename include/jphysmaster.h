@@ -1,4 +1,4 @@
-// jPhysics library master  23 Jun 2024
+// jPhysics library master  12 8月 2025
 #include <j_fission.h>
 #include <j_gammarays.h>
 #include <j_LeeNucleusExtend.h>
